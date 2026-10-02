@@ -3,15 +3,15 @@
 import { motion, useInView } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useSlide } from "@/components/presentation/Slide";
 import { BrandImage } from "@/components/ui/BrandImage";
 import { readableOn } from "@/components/ui/color";
-import { GalleryTile } from "@/components/ui/GalleryTile";
 import { Eyebrow, Lines, SafeArea } from "@/components/ui/Layout";
 import { EASE } from "@/components/ui/motion";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { Reveal, Rule } from "@/components/ui/Reveal";
+import type { Asset } from "@/data/assets";
 import { concepts, themes } from "@/data/brandPresentation";
 
 const c = concepts.origem;
@@ -19,7 +19,7 @@ const bordo = themes.origemBordo.bg;
 const ivory = themes.origemIvory.bg;
 const gold = themes.origemBordo.accent;
 
-// TELA 19 — Abertura --------------------------------------------------------
+// TELA 17 — Abertura --------------------------------------------------------
 
 export function OrigemOpening() {
   const o = c.opening;
@@ -33,12 +33,14 @@ export function OrigemOpening() {
     return () => window.clearTimeout(t);
   }, [inView]);
 
-  // Posições dentro da assinatura original (520 × 348):
-  // símbolo em x 32,3% / largura 34,6%; corpo começa em y 46,55%.
+  // Isolado, o símbolo fica no centro da área da marca; depois sobe ao seu lugar.
+  const { box } = o.symbol;
+  const centerShift = `${((50 - (box.top + box.height / 2)) / box.height) * 100}%`;
+
   return (
     <SafeArea className="items-center justify-between gap-10">
       <div className="relative flex w-full flex-1 items-center justify-center">
-        <motion.svg
+        <svg
           aria-hidden
           viewBox="0 0 100 100"
           className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[min(78vh,64vw)] -translate-x-1/2 -translate-y-1/2 lg:block"
@@ -54,26 +56,30 @@ export function OrigemOpening() {
             animate={inView ? { pathLength: 1, opacity: 0.35 } : undefined}
             transition={{ duration: 3.2, delay: 0.4, ease: EASE }}
           />
-        </motion.svg>
+        </svg>
 
-        <div ref={ref} className="relative w-[min(86vw,24vw_+_26vh,92vh,660px)]" style={{ aspectRatio: "520 / 348" }}>
+        <div
+          ref={ref}
+          className="relative w-[min(80vw,22vw_+_24vh,72vh,600px)]"
+          style={{ aspectRatio: `${c.logo.dark.width} / ${c.logo.dark.height}` }}
+        >
           <motion.div
             className="absolute"
-            style={{ left: "32.31%", top: "1.15%", width: "34.62%" }}
-            initial={{ opacity: 0, scale: 1.45, y: "56%" }}
-            animate={inView ? (joined ? { opacity: 1, scale: 1, y: "0%" } : { opacity: 1, scale: 1.45, y: "56%" }) : undefined}
+            style={{ left: `${box.left}%`, top: `${box.top}%`, width: `${box.width}%` }}
+            initial={{ opacity: 0, scale: 1.35, y: centerShift }}
+            animate={inView ? (joined ? { opacity: 1, scale: 1, y: "0%" } : { opacity: 1, scale: 1.35, y: centerShift }) : undefined}
             transition={{ duration: joined ? 1.9 : 1.8, ease: EASE }}
           >
-            <BrandImage image={o.symbol} alt="Símbolo Origem" sizes="(min-width: 1024px) 240px, 40vw" preload />
+            <BrandImage image={o.symbol} alt="Símbolo Origem" sizes="(min-width: 1024px) 340px, 50vw" preload />
           </motion.div>
           <motion.div
-            className="absolute inset-x-0"
-            style={{ top: "46.55%" }}
+            className="absolute"
+            style={{ left: `${o.body.box.left}%`, top: `${o.body.box.top}%`, width: `${o.body.box.width}%` }}
             initial={{ opacity: 0, clipPath: "inset(0% 0% 100% 0%)" }}
             animate={joined ? { opacity: 1, clipPath: "inset(0% 0% 0% 0%)" } : undefined}
             transition={{ duration: 1.8, delay: 0.45, ease: EASE }}
           >
-            <BrandImage image={o.body} alt="SUN Brazilian Hair — Cabelo brasileiro. Sem exceção." sizes="(min-width: 1024px) 660px, 86vw" />
+            <BrandImage image={o.body} alt="SUN Brazilian Hair — Cabelo brasileiro. Sem exceção." sizes="(min-width: 1024px) 600px, 80vw" />
           </motion.div>
         </div>
       </div>
@@ -85,8 +91,8 @@ export function OrigemOpening() {
         transition={{ duration: 1.4, delay: 1.4, ease: EASE }}
       >
         <p className="numeral eyebrow text-(--slide-accent)">{c.number}</p>
-        <h2 className="text-[clamp(1.3rem,1.9vw,2.2rem)] uppercase leading-none tracking-[0.5em] lg:text-center">{o.title}</h2>
-        <p className="font-display text-[clamp(1.2rem,1.6vw,1.8rem)] italic leading-none lg:text-right">
+        <h2 className="text-[clamp(1.2rem,1.7vw,2rem)] font-light uppercase leading-none tracking-[0.46em] lg:text-center">{o.title}</h2>
+        <p className="text-[clamp(1rem,1.25vw,1.4rem)] font-light leading-none lg:text-right">
           <Lines lines={o.subtitle} />
         </p>
       </motion.div>
@@ -94,7 +100,7 @@ export function OrigemOpening() {
   );
 }
 
-// TELA 20 — Defesa ----------------------------------------------------------
+// TELA 18 — Defesa ----------------------------------------------------------
 
 export function OrigemDefense() {
   const d = c.defense;
@@ -108,18 +114,18 @@ export function OrigemDefense() {
           <Eyebrow number={c.number}>{c.name}</Eyebrow>
         </Reveal>
         <Reveal delay={0.15}>
-          <h2 className="mt-8 font-display text-[clamp(2.4rem,4vw,5rem)] leading-[0.98]">
+          <h2 className="mt-8 font-display text-[clamp(2rem,3.1vw,3.9rem)] leading-[1.08]">
             <Lines lines={d.title} />
           </h2>
         </Reveal>
         <Reveal delay={0.3}>
-          <p className="mt-8 max-w-[44ch] text-[clamp(1rem,1.1vw,1.2rem)] leading-relaxed">{lead}</p>
+          <p className="mt-8 max-w-[46ch] text-[clamp(0.95rem,1.05vw,1.12rem)] leading-[1.7]">{lead}</p>
         </Reveal>
-        <ol className="mt-8 max-w-[52ch] border-t border-(--slide-line)">
+        <ol className="mt-8 max-w-[54ch] border-t border-(--slide-line)">
           {statements.map((s, i) => (
             <li key={s} className="border-b border-(--slide-line)">
               <Reveal delay={0.45 + i * 0.15} y={16}>
-                <p className="flex gap-5 py-3.5 text-[clamp(0.95rem,1vw,1.1rem)] text-(--slide-muted)">
+                <p className="flex gap-5 py-3.5 text-[clamp(0.9rem,0.95vw,1.05rem)] text-(--slide-muted)">
                   <span className="numeral eyebrow pt-1 text-(--slide-accent)">{String(i + 1).padStart(2, "0")}</span>
                   {s}
                 </p>
@@ -128,7 +134,7 @@ export function OrigemDefense() {
           ))}
         </ol>
         <Reveal delay={1}>
-          <p className="mt-8 max-w-[34ch] font-display text-[clamp(1.25rem,1.55vw,1.85rem)] italic leading-snug">{closingLine}</p>
+          <p className="mt-8 max-w-[38ch] text-[clamp(1.05rem,1.25vw,1.45rem)] font-light leading-snug">{closingLine}</p>
         </Reveal>
       </div>
       <ParallaxImage
@@ -142,34 +148,21 @@ export function OrigemDefense() {
   );
 }
 
-// TELA 21 — Construção do símbolo -------------------------------------------
-
-/** Catmull-Rom → Bézier: curva suave passando pelos pontos medidos. */
-function smooth(points: [number, number][]) {
-  let d = `M ${points[0][0]} ${points[0][1]}`;
-  for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[i - 1] ?? points[i];
-    const p1 = points[i];
-    const p2 = points[i + 1];
-    const p3 = points[i + 2] ?? p2;
-    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
-    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-    d += ` C ${c1[0].toFixed(1)} ${c1[1].toFixed(1)} ${c2[0].toFixed(1)} ${c2[1].toFixed(1)} ${p2[0]} ${p2[1]}`;
-  }
-  return d;
-}
+// TELA 19 — Construção do símbolo -------------------------------------------
 
 /*
- * Guias de construção medidas sobre o símbolo original (coordenadas do PNG
- * do brandboard, recorte 318,26 → 498,186). Servem apenas para a animação:
- * ao final, a arte original assume o lugar das guias.
+ * Guias de construção medidas sobre o símbolo oficial (coordenadas do PNG
+ * em /public/brand/logos/origem.png). O arco segue um círculo ajustado por
+ * mínimos quadrados aos pixels do traço; as linhas seguem o eixo de cada fio.
+ * Servem apenas para a animação: ao final, a arte oficial assume o lugar.
  */
-const ARC = "M 343 146 A 72 72 0 1 1 476 88";
+const CIRCLE = { cx: 719.7, cy: 367.8, r: 222.1 };
+const ARC = "M 522.2 469.3 A 222.1 222.1 0 1 1 931.8 301.7";
 const WAVES = [
-  smooth([[343, 146], [355.5, 121], [368, 108.5], [390.5, 102], [413, 108.5], [430.5, 116], [448, 113.5], [468, 101], [483, 78.5]]),
-  smooth([[354, 171], [362, 138.5], [375.5, 126], [393, 120], [418, 126], [433, 132], [450.5, 131], [473, 116], [483, 88.5]]),
-  smooth([[385.5, 176], [400.5, 156], [418, 148.5], [438, 146], [458, 140], [473, 128.5], [483, 111]]),
-  smooth([[408, 181], [425.5, 173.5], [448, 166], [463, 156], [478, 138.5], [483, 113.5]]),
+  "M 525.7 465.7 C 528.9 459.4 536.8 440.2 544.6 427.9 C 552.4 415.6 563.0 402.0 572.3 391.8 C 581.5 381.6 589.0 373.7 600.1 366.8 C 611.2 359.9 626.0 354.2 639 350.7 C 652.0 347.2 664.0 345.8 677.9 345.7 C 691.8 345.6 707.5 346.6 722.3 350.1 C 737.1 353.6 752.0 362.8 766.8 366.8 C 781.6 370.8 796.4 374.0 811.2 374 C 826.0 374.0 841.8 371.3 855.7 366.8 C 869.6 362.4 883.5 354.5 894.6 347.3 C 905.7 340.1 915.4 332.2 922.3 323.4 C 929.2 314.6 933.2 303.5 936.2 294.6 C 939.2 285.7 939.5 274.2 940.1 270.1",
+  "M 559.6 552.9 C 560.3 545.0 561.0 520.0 564 505.7 C 567.0 491.4 571.9 478.9 577.9 466.8 C 583.9 454.8 590.9 442.7 600.1 433.4 C 609.4 424.1 620.4 417.0 633.4 411.2 C 646.4 405.4 663.1 400.3 677.9 398.4 C 692.7 396.5 707.5 397.0 722.3 400.1 C 737.1 403.2 752.0 413.2 766.8 416.8 C 781.6 420.4 796.4 422.1 811.2 421.8 C 826.0 421.5 840.9 420.1 855.7 415.1 C 870.5 410.1 887.2 402.8 900.1 391.8 C 913.0 380.8 925.1 364.8 933.4 349 C 941.7 333.3 947.4 314.2 950.1 297.3 C 952.8 280.4 949.7 256.1 949.6 247.9",
+  "M 637.9 575.1 C 639.9 569.1 644.4 550.6 650.1 539 C 655.8 527.4 664.0 515.0 672.3 505.7 C 680.6 496.4 689.9 489.5 700.1 483.4 C 710.3 477.3 720.4 471.9 733.4 469 C 746.4 466.1 763.1 466.8 777.9 465.7 C 792.7 464.6 807.5 464.0 822.3 462.3 C 837.1 460.6 853.8 459.1 866.8 455.7 C 879.8 452.3 889.9 448.3 900.1 441.8 C 910.3 435.3 920.0 427.9 927.9 416.8 C 935.8 405.7 942.8 387.5 947.3 375.1 C 951.8 362.7 953.4 347.8 954.6 342.3",
+  "M 710.1 586.2 C 714.0 582.5 724.0 570.4 733.4 564 C 742.8 557.6 753.8 552.6 766.8 547.9 C 779.8 543.2 796.4 540.5 811.2 535.7 C 826.0 530.9 841.8 526.6 855.7 519 C 869.6 511.4 883.5 501.1 894.6 490.1 C 905.7 479.1 914.4 467.0 922.3 452.9 C 930.2 438.8 936.4 424.1 941.8 405.7 C 947.2 387.3 952.5 352.9 954.6 342.3",
 ];
 
 const PHASES = [0.3, 2.1, 4.1]; // início de cada etapa (s)
@@ -200,6 +193,8 @@ export function OrigemConstruction() {
     return () => timers.forEach(window.clearTimeout);
   }, [run]);
 
+  const { origin, width, height } = k.symbol;
+
   return (
     <SafeArea className="gap-12 lg:grid lg:grid-cols-[1fr_34%] lg:gap-[5vw]">
       <div className="flex flex-col">
@@ -207,27 +202,33 @@ export function OrigemConstruction() {
           <Eyebrow number={c.number}>{k.eyebrow}</Eyebrow>
         </Reveal>
         <div className="flex flex-1 items-center justify-center py-10 lg:py-0">
-          <div className="relative w-[min(80vw,20vw_+_22vh,50vh,440px)]" style={{ aspectRatio: "180 / 160" }}>
+          <div className="relative w-[min(80vw,20vw_+_22vh,52vh,480px)]" style={{ aspectRatio: `${width} / ${height}` }}>
             <motion.div
               className="absolute inset-0"
               initial={false}
               animate={{ opacity: phase >= 3 ? 1 : 0, filter: phase >= 3 ? "blur(0px)" : "blur(4px)" }}
               transition={{ duration: 1.6, ease: EASE }}
             >
-              <Image src={k.symbol.src} alt="Símbolo Origem" fill sizes="440px" quality={90} className="object-contain" />
+              <Image src={k.symbol.src} alt="Símbolo Origem" fill sizes="480px" quality={90} className="object-contain" />
             </motion.div>
 
-            <svg key={run} viewBox="318 26 180 160" className="absolute inset-0 h-full w-full overflow-visible" fill="none" aria-hidden>
+            <svg
+              key={run}
+              viewBox={`${origin.x} ${origin.y} ${width} ${height}`}
+              className="absolute inset-0 h-full w-full overflow-visible [&_*]:[vector-effect:non-scaling-stroke]"
+              fill="none"
+              aria-hidden
+            >
               {/* guia: círculo completo */}
               <motion.circle
-                cx={405}
-                cy={108}
-                r={72}
+                cx={CIRCLE.cx}
+                cy={CIRCLE.cy}
+                r={CIRCLE.r}
                 stroke="currentColor"
-                strokeWidth={0.35}
-                strokeDasharray="1.2 2.4"
+                strokeWidth={1}
+                strokeDasharray="2 6"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: phase === 0 ? 0 : phase >= 3 ? 0.12 : 0.3 }}
+                animate={{ opacity: phase === 0 ? 0 : phase >= 3 ? 0.14 : 0.32 }}
                 transition={{ duration: 1.2, ease: EASE }}
               />
               <motion.g
@@ -239,7 +240,7 @@ export function OrigemConstruction() {
               >
                 <motion.path
                   d={ARC}
-                  strokeWidth={1.1}
+                  strokeWidth={1.5}
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: phase >= 1 ? 1 : 0 }}
                   transition={{ duration: 1.7, ease: EASE }}
@@ -248,7 +249,7 @@ export function OrigemConstruction() {
                   <motion.path
                     key={i}
                     d={d}
-                    strokeWidth={1.1}
+                    strokeWidth={1.5}
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: phase >= 2 ? 1 : 0 }}
                     transition={{ duration: 1.4, delay: phase >= 2 ? i * 0.18 : 0, ease: EASE }}
@@ -276,7 +277,7 @@ export function OrigemConstruction() {
                     <span className="numeral">{String(i + 1).padStart(2, "0")}</span>
                     {step.title}
                   </p>
-                  <p className="mt-3 font-display text-[clamp(1.5rem,2vw,2.3rem)] italic leading-none">{step.text}</p>
+                  <p className="mt-3 font-display text-[clamp(1.35rem,1.7vw,2rem)] leading-none">{step.text}</p>
                 </div>
               </li>
             );
@@ -295,23 +296,71 @@ export function OrigemConstruction() {
   );
 }
 
-// TELA 22 — Símbolo + wordmark ----------------------------------------------
+// TELA 20 — Símbolo + wordmark ----------------------------------------------
 
-const markWidths: Record<string, string> = {
-  "Símbolo isolado": "min(52vw, 8vw + 14vh, 200px)",
-  SUN: "min(60vw, 9vw + 18vh, 280px)",
-  "SUN Brazilian Hair": "min(72vw, 12vw + 24vh, 360px)",
-  "Versão horizontal": "min(68vw, 10vw + 20vh, 300px)",
-  "Versão vertical": "min(56vw, 8vw + 16vh, 240px)",
-  Selo: "min(48vw, 6vw + 14vh, 200px)",
-};
+/**
+ * Versão horizontal do brandboard Origem, remontada em alta com as partes
+ * oficiais: símbolo à esquerda, SUN + Brazilian Hair à direita.
+ */
+function HorizontalLockup({ symbol, name, width }: { symbol: Asset; name: Asset; width: string }) {
+  return (
+    <div className="flex items-center" style={{ width, gap: "7.6%" }} role="img" aria-label="Versão horizontal">
+      <div style={{ width: "29.5%" }}>
+        <BrandImage image={symbol} alt="" sizes="160px" />
+      </div>
+      <div style={{ width: "62.9%" }}>
+        <BrandImage image={name} alt="" sizes="320px" />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Selo do brandboard Origem, remontado em vetor: textos em arco
+ * (Montserrat, tipografia secundária indicada no brandboard) e símbolo oficial.
+ */
+function Seal({ symbol, top, bottom, width }: { symbol: Asset; top: string; bottom: string; width: string }) {
+  const id = useId().replace(/:/g, "");
+  return (
+    <svg viewBox="0 0 240 240" style={{ width }} role="img" aria-label={`Selo: ${top}. ${bottom}`}>
+      <defs>
+        <path id={`${id}-top`} d="M 30 120 A 90 90 0 0 1 210 120" />
+        <path id={`${id}-bottom`} d="M 21 120 A 99 99 0 0 0 219 120" />
+      </defs>
+      <g fill={bordo} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 500 }}>
+        <text fontSize="13" letterSpacing="3.2">
+          <textPath href={`#${id}-top`} startOffset="50%" textAnchor="middle">
+            {top.toUpperCase()}
+          </textPath>
+        </text>
+        <text fontSize="10.5" letterSpacing="2">
+          <textPath href={`#${id}-bottom`} startOffset="50%" textAnchor="middle">
+            {bottom.toUpperCase()}
+          </textPath>
+        </text>
+        <circle cx="22" cy="120" r="2" />
+        <circle cx="218" cy="120" r="2" />
+      </g>
+      <image href={symbol.src} x="70" y="72" width="100" height={(100 * symbol.height) / symbol.width} />
+    </svg>
+  );
+}
+
+const darkWidths = ["min(48vw, 7vw + 13vh, 190px)", "min(60vw, 9vw + 18vh, 290px)", "min(66vw, 11vw + 21vh, 330px)"];
 
 export function OrigemMarks() {
   const m = c.marks;
-  const rows = [
-    { items: m.dark, bg: bordo, fg: ivory, offset: 0 },
-    { items: m.light, bg: ivory, fg: bordo, offset: 3 },
+  const L = m.light;
+  const light = [
+    { label: L.labels.horizontal, node: <HorizontalLockup symbol={L.symbol} name={L.name} width="min(72vw, 13vw + 22vh, 360px)" /> },
+    { label: L.labels.vertical, node: <BrandImage image={L.full} alt="Versão vertical" width="min(56vw, 8vw + 17vh, 250px)" sizes="250px" /> },
+    { label: L.labels.seal, node: <Seal symbol={L.symbol} top={L.seal.top} bottom={L.seal.bottom} width="min(56vw, 7vw + 17vh, 230px)" /> },
   ];
+  const rows = [
+    { bg: bordo, fg: ivory, items: m.dark.map((d, i) => ({ label: d.label, node: <BrandImage image={d.image} alt={d.label} width={darkWidths[i]} sizes="330px" /> })) },
+    { bg: ivory, fg: bordo, items: light },
+  ];
+
   return (
     <div className="grid min-h-svh lg:h-full lg:min-h-0 lg:grid-rows-2">
       {rows.map((row, r) => (
@@ -324,15 +373,13 @@ export function OrigemMarks() {
               } ${i > 0 ? "lg:border-l" : ""}`}
               style={{ borderColor: `color-mix(in srgb, ${row.fg} 14%, transparent)` }}
             >
-              <Reveal delay={0.2 + (row.offset + i) * 0.12}>
-                <BrandImage image={item.image} alt={item.label} width={markWidths[item.label]} sizes="360px" />
-              </Reveal>
+              <Reveal delay={0.2 + (r * 3 + i) * 0.12}>{item.node}</Reveal>
               <p
                 className={`eyebrow absolute left-5 flex gap-3 opacity-70 lg:left-[2.2vw] ${
                   r === 0 ? "bottom-5 lg:bottom-[3vh]" : "top-5 lg:top-[3vh]"
                 }`}
               >
-                <span className="numeral">{String(row.offset + i + 1).padStart(2, "0")}</span>
+                <span className="numeral">{String(r * 3 + i + 1).padStart(2, "0")}</span>
                 {item.label}
               </p>
             </li>
@@ -343,7 +390,7 @@ export function OrigemMarks() {
   );
 }
 
-// TELA 23 — Paleta e sistema ------------------------------------------------
+// TELA 21 — Paleta e sistema ------------------------------------------------
 
 export function OrigemSystem() {
   const s = c.system;
@@ -359,13 +406,8 @@ export function OrigemSystem() {
             className="relative grid aspect-square place-items-center rounded-full text-center transition-[background-color,color] duration-[900ms] ease-(--ease-editorial)"
             style={{ backgroundColor: swatch.hex, color: text, boxShadow: `0 0 0 1px color-mix(in srgb, ${bordo} 14%, transparent)` }}
           >
-            <motion.div
-              key={swatch.hex}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: EASE }}
-            >
-              <p className="font-display text-[clamp(2rem,3.4vw,4rem)] leading-none">{swatch.name}</p>
+            <motion.div key={swatch.hex} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
+              <p className="font-display text-[clamp(1.8rem,2.8vw,3.4rem)] leading-none">{swatch.name}</p>
               <p className="numeral eyebrow mt-4">{swatch.hex}</p>
               <p className="mt-3 text-sm opacity-80">{swatch.role}</p>
             </motion.div>
@@ -373,13 +415,13 @@ export function OrigemSystem() {
         </Reveal>
       </div>
 
-      <div className="flex flex-col justify-between gap-10">
+      <div className="flex flex-col justify-between gap-10 lg:gap-[3vh]">
         <div>
           <Reveal>
             <Eyebrow number={c.number}>{s.eyebrow}</Eyebrow>
           </Reveal>
           <Reveal delay={0.15}>
-            <h2 className="mt-6 font-display text-[clamp(2.2rem,3.4vw,4.2rem)] leading-none">
+            <h2 className="mt-6 font-display text-[clamp(2rem,2.9vw,3.5rem)] leading-[1.08]">
               <Lines lines={s.title} />
             </h2>
           </Reveal>
@@ -396,7 +438,7 @@ export function OrigemSystem() {
                   onFocus={() => setActive(i)}
                   onClick={() => setActive(i)}
                   aria-pressed={active === i}
-                  className="flex w-full items-center gap-4 py-3 text-left lg:py-[1.6vh]"
+                  className="flex w-full items-center gap-4 py-3 text-left lg:py-[1.1vh]"
                 >
                   {/* O símbolo marca a cor ativa: o sistema usado como navegação */}
                   <span className="relative size-6 shrink-0">
@@ -406,11 +448,11 @@ export function OrigemSystem() {
                       animate={{ opacity: active === i ? 1 : 0, scale: active === i ? 1 : 0.6 }}
                       transition={{ duration: 0.6, ease: EASE }}
                     >
-                      <Image src={c.construction.symbol.src} alt="" fill sizes="24px" className="object-contain" />
+                      <Image src={s.symbolLight.src} alt="" fill sizes="24px" className="object-contain" />
                     </motion.span>
                   </span>
                   <span className="size-4 shrink-0 rounded-full" style={{ backgroundColor: sw.hex, boxShadow: `0 0 0 1px color-mix(in srgb, ${bordo} 18%, transparent)` }} />
-                  <span className={`flex-1 text-[clamp(0.95rem,1.1vw,1.2rem)] uppercase tracking-[0.24em] transition-opacity duration-500 ${active === i ? "opacity-100" : "opacity-50"}`}>
+                  <span className={`flex-1 text-[clamp(0.85rem,0.95vw,1.05rem)] uppercase tracking-[0.24em] transition-opacity duration-500 ${active === i ? "opacity-100" : "opacity-50"}`}>
                     {sw.name}
                   </span>
                   <span className="numeral eyebrow text-(--slide-muted)">{sw.hex}</span>
@@ -420,70 +462,23 @@ export function OrigemSystem() {
           </ol>
         </Reveal>
 
+        {/* Escala: o símbolo como elemento reconhecível em qualquer tamanho */}
         <Reveal delay={0.5}>
-          <div className="flex items-center gap-6 px-5 py-5 lg:px-[2vw]" style={{ backgroundColor: bordo, color: ivory }}>
-            <BrandImage image={s.symbol} alt="" width="clamp(56px, 5vw, 84px)" sizes="84px" />
-            <span aria-hidden className="h-12 w-px" style={{ backgroundColor: `color-mix(in srgb, ${gold} 60%, transparent)` }} />
-            <BrandImage image={s.lines} alt="" width="clamp(52px, 4.6vw, 78px)" sizes="78px" />
-            <p className="eyebrow ml-auto hidden text-right leading-relaxed opacity-80 xl:block">{s.words.join("  |  ")}</p>
+          <div className="px-5 py-5 lg:px-[2vw]" style={{ backgroundColor: bordo, color: ivory }}>
+            <div className="flex flex-wrap items-end gap-5 lg:flex-nowrap lg:gap-5">
+              {s.sizes.map((size) => (
+                <figure key={size} className="flex shrink-0 flex-col items-center gap-2">
+                  <Image src={s.symbolDark.src} alt="" width={size} height={Math.round((size * s.symbolDark.height) / s.symbolDark.width)} sizes={`${size}px`} />
+                  <figcaption className="numeral eyebrow opacity-60">{size}</figcaption>
+                </figure>
+              ))}
+              <div className="min-w-0 flex-1 space-y-3 lg:text-right">
+                <p className="eyebrow leading-relaxed opacity-60">{s.scaleNote}</p>
+                <p className="eyebrow hidden leading-relaxed opacity-80 xl:block">{s.words.join("  |  ")}</p>
+              </div>
+            </div>
           </div>
         </Reveal>
-      </div>
-    </SafeArea>
-  );
-}
-
-// TELA 24 — Aplicações ------------------------------------------------------
-
-export function OrigemApplications() {
-  const a = c.applications;
-  const items = a.items;
-  return (
-    <SafeArea wide className="gap-10 lg:gap-[5vh]">
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:px-[calc(6vw-2.5rem)]">
-        <div>
-          <Reveal>
-            <Eyebrow number={c.number}>{a.eyebrow}</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <h2 className="mt-6 font-display text-[clamp(2.2rem,3.4vw,4.2rem)] leading-none">
-              <Lines lines={a.title} />
-            </h2>
-          </Reveal>
-        </div>
-        <Reveal delay={0.3}>
-          <div className="flex items-end gap-6 lg:gap-8">
-            {a.sizes.map((size) => (
-              <figure key={size} className="flex flex-col items-center gap-3">
-                <Image src={c.construction.symbol.src} alt="" width={size} height={Math.round((size * 160) / 180)} sizes={`${size}px`} />
-                <figcaption className="numeral eyebrow text-(--slide-muted)">{size}</figcaption>
-              </figure>
-            ))}
-          </div>
-          <p className="eyebrow mt-4 text-(--slide-muted) lg:text-right">{a.scaleNote}</p>
-        </Reveal>
-      </div>
-
-      <div className="grid flex-1 grid-cols-2 gap-2 lg:mx-auto lg:flex lg:min-h-0 lg:w-[min(100%,170vh)] lg:items-end">
-        {items.map((item, i) => {
-          const ratio = item.image.width / item.image.height;
-          return (
-            <Reveal
-              key={item.label}
-              delay={0.3 + i * 0.12}
-              className={`lg:max-h-full ${i === 0 ? "col-span-2" : ""}`}
-              style={{ flex: `${ratio} 1 0%` }}
-            >
-              <GalleryTile
-                items={items}
-                index={i}
-                sizes="(min-width: 1024px) 25vw, 50vw"
-                className="w-full"
-                style={{ aspectRatio: `${ratio}` }}
-              />
-            </Reveal>
-          );
-        })}
       </div>
     </SafeArea>
   );

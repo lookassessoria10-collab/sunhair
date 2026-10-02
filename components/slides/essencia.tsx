@@ -2,10 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { BrandImage } from "@/components/ui/BrandImage";
 import { readableOn } from "@/components/ui/color";
-import { GalleryTile } from "@/components/ui/GalleryTile";
 import { Eyebrow, Lines, SafeArea } from "@/components/ui/Layout";
 import { EASE, VIEWPORT } from "@/components/ui/motion";
 import { MaskReveal, Reveal, Rule } from "@/components/ui/Reveal";
@@ -24,11 +23,11 @@ export function EssenciaOpening() {
           <p className="numeral eyebrow text-(--slide-muted)">{c.number}</p>
         </Reveal>
         <Reveal delay={1.35}>
-          <h2 className="mt-5 text-[clamp(1.4rem,2.1vw,2.4rem)] uppercase leading-none tracking-[0.46em]">{c.opening.title}</h2>
+          <h2 className="mt-5 text-[clamp(1.3rem,1.9vw,2.2rem)] font-light uppercase leading-none tracking-[0.42em]">{c.opening.title}</h2>
         </Reveal>
         <Rule delay={1.5} className="mt-7 w-16" />
         <Reveal delay={1.6}>
-          <p className="mt-7 font-display text-[clamp(1.25rem,1.7vw,1.9rem)] italic leading-snug text-(--slide-muted)">
+          <p className="mt-7 text-[clamp(1.05rem,1.3vw,1.45rem)] font-light leading-snug text-(--slide-muted)">
             <Lines lines={c.opening.subtitle} />
           </p>
         </Reveal>
@@ -39,7 +38,7 @@ export function EssenciaOpening() {
           <BrandImage
             image={c.logo.light}
             alt="SUN Brazilian Hair — conceito Essência"
-            width="min(86vw, 44vw + 20vh, 78vh, 700px)"
+            width="min(86vw, 40vw + 18vh, 76vh, 700px)"
             sizes="(min-width: 1024px) 700px, 90vw"
             preload
           />
@@ -77,7 +76,7 @@ function DetailFrame({
         viewport={VIEWPORT}
       >
         <motion.div
-          className="absolute inset-0"
+          className="absolute inset-[6%]"
           style={{ transformOrigin: position }}
           variants={{ hidden: { scale: zoom * 0.82, opacity: 0 }, shown: { scale: zoom, opacity: 1 } }}
           transition={{ duration: 2.6, delay: 0.3 + index * 0.25, ease: EASE }}
@@ -102,11 +101,11 @@ export function EssenciaDefense() {
           <Eyebrow number={c.number}>{c.name}</Eyebrow>
         </Reveal>
         <Reveal delay={0.15}>
-          <h2 className="mt-8 font-display text-[clamp(2.5rem,4.2vw,5.2rem)] leading-[0.98]">
+          <h2 className="mt-8 font-display text-[clamp(2.1rem,3.3vw,4.1rem)] leading-[1.08]">
             <Lines lines={d.title} />
           </h2>
         </Reveal>
-        <div className="mt-10 max-w-[38ch] space-y-5 text-[clamp(1rem,1.05vw,1.15rem)] leading-relaxed text-(--slide-muted)">
+        <div className="mt-10 max-w-[40ch] space-y-5 text-[clamp(0.95rem,1vw,1.08rem)] leading-[1.75] text-(--slide-muted)">
           {d.paragraphs.map((p, i) => (
             <Reveal key={i} delay={0.3 + i * 0.15}>
               <p className={i === d.paragraphs.length - 1 ? "text-(--slide-fg)" : ""}>{p}</p>
@@ -116,18 +115,8 @@ export function EssenciaDefense() {
       </div>
 
       <div className="grid gap-8 lg:relative lg:block lg:h-[min(62vh,560px)]">
-        <DetailFrame
-          image={c.logo.light}
-          index={0}
-          {...d.details[0]}
-          className="lg:absolute lg:left-0 lg:top-0 lg:w-[54%]"
-        />
-        <DetailFrame
-          image={c.logo.light}
-          index={1}
-          {...d.details[1]}
-          className="lg:absolute lg:bottom-0 lg:right-0 lg:w-[46%]"
-        />
+        <DetailFrame image={c.logo.light} index={0} {...d.details[0]} className="lg:absolute lg:left-0 lg:top-0 lg:w-[54%]" />
+        <DetailFrame image={c.logo.light} index={1} {...d.details[1]} className="lg:absolute lg:bottom-0 lg:right-0 lg:w-[46%]" />
       </div>
     </SafeArea>
   );
@@ -135,15 +124,16 @@ export function EssenciaDefense() {
 
 // TELA 08 — Construção ------------------------------------------------------
 
-/** Distância entre as partes da assinatura depois da "explosão". */
-const PART_GAP = "clamp(1.75rem, 5vh, 3.25rem)";
+/** Quanto cada parte se afasta na "vista explodida". */
+const SPREAD = "clamp(1.25rem, 4.5vh, 3rem)";
 
 export function EssenciaConstruction() {
   const k = c.construction;
+  const [sun, name, tagline] = k.parts;
   // 0: tipografia e 1: movimento destacam "SUN"; 2: respiro destaca os espaços
   const [focus, setFocus] = useState<number | null>(null);
-  const partDim = (part: number) => focus !== null && !(focus < 2 ? part === 0 : false);
-  const gapActive = focus === 2;
+  const dim = (part: number) => focus !== null && !(focus < 2 && part === 0);
+  const offsets = [`calc(-1 * ${SPREAD})`, "0px", SPREAD];
 
   return (
     <SafeArea className="gap-14 lg:grid lg:grid-cols-[1fr_34%] lg:gap-[5vw]">
@@ -151,28 +141,42 @@ export function EssenciaConstruction() {
         <Reveal>
           <Eyebrow number={c.number}>{k.eyebrow}</Eyebrow>
         </Reveal>
-        <div className="flex flex-1 items-center justify-center py-10 lg:py-0">
-          <div className="flex w-[min(84vw,40vw_+_16vh,560px)] flex-col items-stretch" style={{ gap: PART_GAP }}>
-            {k.parts.map((part, i) => (
-              <div key={part.src} className="relative">
-                {i > 0 && <GapMarker active={gapActive} />}
-                <motion.div
-                  initial={{ y: i === 0 ? `calc(${PART_GAP})` : i === 2 ? `calc(-1 * ${PART_GAP})` : 0, opacity: 0.4 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  viewport={VIEWPORT}
-                  transition={{ duration: 1.8, delay: 0.5, ease: EASE }}
-                >
-                  <motion.div animate={{ opacity: partDim(i) ? 0.22 : 1 }} transition={{ duration: 0.6, ease: EASE }}>
-                    <BrandImage image={part} alt="" sizes="(min-width: 1024px) 560px, 84vw" />
-                  </motion.div>
+        <div className="flex flex-1 items-center justify-center py-16 lg:py-0">
+          {/* As partes partem da posição exata na marca e se afastam. */}
+          <motion.div
+            className="relative w-[min(80vw,34vw+12vh,540px)]"
+            style={{ aspectRatio: `${c.logo.light.width} / ${c.logo.light.height}` }}
+            initial="joined"
+            whileInView="apart"
+            viewport={VIEWPORT}
+          >
+            {[sun, name, tagline].map((part, i) => (
+              <motion.div
+                key={part.src}
+                className="absolute"
+                style={{ left: `${part.box.left}%`, top: `${part.box.top}%`, width: `${part.box.width}%` }}
+                variants={{ joined: { y: "0px" }, apart: { y: offsets[i] } }}
+                transition={{ duration: 1.8, delay: 0.6, ease: EASE }}
+              >
+                <motion.div animate={{ opacity: dim(i) ? 0.22 : 1 }} transition={{ duration: 0.6, ease: EASE }}>
+                  <BrandImage image={part} alt="" sizes="(min-width: 1024px) 540px, 80vw" />
                 </motion.div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+
+            <GapMarker active={focus === 2} style={{ top: `calc(${name.box.top}% - ${SPREAD})`, height: SPREAD }} />
+            <GapMarker
+              active={focus === 2}
+              style={{
+                top: `${name.box.top + name.box.height}%`,
+                height: `calc(${tagline.box.top - name.box.top - name.box.height}% + ${SPREAD})`,
+              }}
+            />
+          </motion.div>
         </div>
       </div>
 
-      <ol className="flex flex-col justify-center gap-0" onMouseLeave={() => setFocus(null)}>
+      <ol className="flex flex-col justify-center" onMouseLeave={() => setFocus(null)}>
         {k.callouts.map((callout, i) => (
           <li key={callout.title}>
             <Rule delay={0.8 + i * 0.2} />
@@ -190,7 +194,7 @@ export function EssenciaConstruction() {
                   <span className="numeral">{String(i + 1).padStart(2, "0")}</span>
                   {callout.title}
                 </span>
-                <span className="mt-3 block font-display text-[clamp(1.35rem,1.75vw,2rem)] leading-snug">{callout.text}</span>
+                <span className="mt-3 block font-display text-[clamp(1.15rem,1.4vw,1.6rem)] leading-snug">{callout.text}</span>
               </button>
             </Reveal>
           </li>
@@ -201,20 +205,19 @@ export function EssenciaConstruction() {
 }
 
 /** Marcação discreta do respiro entre as partes da assinatura. */
-function GapMarker({ active }: { active: boolean }) {
+function GapMarker({ active, style }: { active: boolean; style: CSSProperties }) {
+  const tone = active ? "bg-(--slide-fg)" : "bg-(--slide-accent)";
   return (
     <motion.span
       aria-hidden
-      className="absolute -left-8 bottom-full flex flex-col items-center justify-between lg:-left-12"
-      style={{ height: PART_GAP }}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={VIEWPORT}
+      className="absolute -left-8 flex flex-col items-center justify-between lg:-left-12"
+      style={style}
+      variants={{ joined: { opacity: 0 }, apart: { opacity: 1 } }}
       transition={{ duration: 1.2, delay: 2.1, ease: EASE }}
     >
-      <span className={`h-px w-2 transition-colors duration-500 ${active ? "bg-(--slide-fg)" : "bg-(--slide-accent)"}`} />
-      <span className={`w-px flex-1 transition-colors duration-500 ${active ? "bg-(--slide-fg)" : "bg-(--slide-accent)"}`} />
-      <span className={`h-px w-2 transition-colors duration-500 ${active ? "bg-(--slide-fg)" : "bg-(--slide-accent)"}`} />
+      <span className={`h-px w-2 transition-colors duration-500 ${tone}`} />
+      <span className={`w-px flex-1 transition-colors duration-500 ${tone}`} />
+      <span className={`h-px w-2 transition-colors duration-500 ${tone}`} />
     </motion.span>
   );
 }
@@ -232,7 +235,7 @@ export function EssenciaColors() {
             <Eyebrow number={c.number}>{p.eyebrow}</Eyebrow>
           </Reveal>
           <Reveal delay={0.15}>
-            <h2 className="mt-6 font-display text-[clamp(2.2rem,3.4vw,4.2rem)] leading-none">{p.title}</h2>
+            <h2 className="mt-6 font-display text-[clamp(2rem,2.9vw,3.5rem)] leading-[1.05]">{p.title}</h2>
           </Reveal>
         </div>
         <Reveal delay={0.3}>
@@ -262,7 +265,7 @@ export function EssenciaColors() {
               transition={{ duration: 1.2, delay: 0.3 + i * 0.12, ease: EASE }}
             >
               <span className="absolute inset-x-4 bottom-4 block lg:inset-x-5 lg:bottom-6">
-                <span className="block font-display text-[clamp(1.25rem,1.6vw,1.9rem)] leading-none">{s.name}</span>
+                <span className="block font-display text-[clamp(1.05rem,1.3vw,1.5rem)] leading-tight">{s.name}</span>
                 <span
                   className={`mt-3 block transition-[opacity,translate] duration-700 ease-(--ease-editorial) lg:translate-y-2 lg:opacity-0 ${
                     isActive ? "lg:translate-y-0 lg:opacity-100" : ""
@@ -292,14 +295,18 @@ export function EssenciaTypography() {
         </Reveal>
         <div className="flex flex-1 flex-col justify-center gap-10 pt-10 lg:gap-[5vh] lg:pt-0">
           <Reveal delay={0.2}>
-            <BrandImage image={t.primary.specimen} alt="Aa — tipografia principal" width="min(70vw, 18vw + 22vh, 400px)" />
+            <p aria-hidden className="font-essencia text-[clamp(6rem,11vw,12rem)] leading-[0.9]">
+              Aa
+            </p>
             <p className="eyebrow mt-6">{t.primary.label}</p>
             <p className="eyebrow mt-2 text-(--slide-muted)">{t.primary.traits.join("  |  ")}</p>
           </Reveal>
           <Rule delay={0.5} className="w-full" />
           <Reveal delay={0.6} className="flex items-end gap-8">
-            <BrandImage image={t.secondary.specimen} alt="Aa — tipografia de apoio" width="min(30vw, 6vw + 9vh, 150px)" />
-            <div>
+            <p aria-hidden className="font-essencia-support text-[clamp(3.2rem,5vw,5.6rem)] font-light leading-[0.9]">
+              Aa
+            </p>
+            <div className="pb-1">
               <p className="eyebrow">{t.secondary.label}</p>
               <p className="eyebrow mt-2 text-(--slide-muted)">{t.secondary.traits.join("  |  ")}</p>
             </div>
@@ -340,9 +347,9 @@ export function EssenciaLanguage() {
           <Eyebrow number={c.number}>{l.eyebrow}</Eyebrow>
         </Reveal>
         <Reveal delay={0.15}>
-          <h2 className="mt-6 max-w-[22ch] font-display text-[clamp(2rem,3.2vw,4rem)] leading-[1.02]">
+          <h2 className="mt-6 max-w-[26ch] font-display text-[clamp(1.8rem,2.6vw,3.2rem)] leading-[1.1]">
             <span className="block">{l.title[0]}</span>
-            <span className="block italic text-(--slide-muted)">{l.title[1]}</span>
+            <span className="block text-(--slide-muted)">{l.title[1]}</span>
           </h2>
         </Reveal>
       </div>
@@ -363,21 +370,23 @@ export function EssenciaLanguage() {
             <Image src={l.photo.src} alt="" fill sizes="(min-width: 1024px) 30vw, 90vw" className="object-cover" />
             <div className="absolute inset-0 grid place-items-center p-[6%]">
               <MaskReveal from="left" duration={2.4} delay={0.8} className="w-full">
-                <BrandImage
-                  image={l.line}
-                  alt=""
-                  sizes="(min-width: 1024px) 30vw, 90vw"
-                  className="mix-blend-screen brightness-[1.9] saturate-[0.7]"
-                />
+                <BrandImage image={l.line} alt="" sizes="(min-width: 1024px) 30vw, 90vw" className="mix-blend-screen brightness-[1.9] saturate-[0.7]" />
               </MaskReveal>
             </div>
           </div>
         </Panel>
 
-        {/* 03 — linha aplicada em composição (recorte original do brandboard) */}
+        {/* 03 — linha aplicada em composição: marca + linha sobre o bordô da paleta */}
         <Panel index={2} label={l.labels[2]}>
-          <div className="photo-grain absolute inset-0 overflow-hidden">
-            <Image src={l.applied.src} alt="" fill sizes="(min-width: 1024px) 30vw, 90vw" className="object-cover" style={{ objectPosition: "50% 60%" }} />
+          <div className="absolute inset-0 overflow-hidden" style={{ backgroundColor: l.composition.bg }}>
+            <div className="absolute inset-x-[-12%] bottom-[-6%] opacity-80">
+              <MaskReveal from="left" duration={2.6} delay={1} className="w-full">
+                <BrandImage image={l.line} alt="" sizes="(min-width: 1024px) 36vw, 100vw" />
+              </MaskReveal>
+            </div>
+            <div className="absolute inset-x-0 top-[16%] flex justify-center">
+              <BrandImage image={l.composition.logo} alt="" width="58%" sizes="(min-width: 1024px) 18vw, 50vw" />
+            </div>
           </div>
         </Panel>
       </div>
@@ -394,41 +403,5 @@ function Panel({ index, label, children }: { index: number; label: string; child
         {label}
       </p>
     </Reveal>
-  );
-}
-
-// TELA 12 — Aplicações ------------------------------------------------------
-
-export function EssenciaApplications() {
-  const a = c.applications;
-  const items = a.items;
-  return (
-    <SafeArea wide className="gap-8">
-      <div className="grid flex-1 gap-2 lg:min-h-0 lg:grid-cols-4 lg:grid-rows-2">
-        <Reveal className="lg:col-span-2 lg:row-span-2" delay={0.1}>
-          <GalleryTile items={items} index={0} sizes="(min-width: 1024px) 50vw, 100vw" className="aspect-[4/5] h-full w-full lg:aspect-auto" />
-        </Reveal>
-        <Reveal delay={0.25}>
-          <GalleryTile items={items} index={1} sizes="(min-width: 1024px) 25vw, 100vw" className="aspect-[4/5] h-full w-full lg:aspect-auto" />
-        </Reveal>
-        <Reveal delay={0.4}>
-          <GalleryTile items={items} index={2} sizes="(min-width: 1024px) 25vw, 100vw" className="aspect-[4/5] h-full w-full lg:aspect-auto" />
-        </Reveal>
-        <Reveal delay={0.55}>
-          <GalleryTile
-            items={items}
-            index={3}
-            sizes="(min-width: 1024px) 25vw, 100vw"
-            position="50% 30%"
-            className="aspect-[4/5] h-full w-full lg:aspect-auto"
-          />
-        </Reveal>
-        <Reveal delay={0.7} className="flex flex-col justify-end p-2 lg:p-[2vw]">
-          <Eyebrow number={c.number}>{a.eyebrow}</Eyebrow>
-          <h2 className="mt-5 font-display text-[clamp(2rem,3vw,3.6rem)] leading-none">{a.title}</h2>
-          <p className="eyebrow mt-5 text-(--slide-muted)">Clique para ampliar</p>
-        </Reveal>
-      </div>
-    </SafeArea>
   );
 }

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "extract-assets": "node scripts/extract-brand-assets.mjs"
+    "extract-assets": "node scripts/extract-brand-assets.mjs",
+    "build-marks": "node scripts/build-marks.mjs"
   },
   "dependencies": {
     "framer-motion": "^14.0.0",

@@ -1,24 +1,4 @@
 {
-  "essencia/app-box": {
-    "src": "/brand/crops/essencia/app-box.jpg",
-    "width": 628,
-    "height": 714
-  },
-  "essencia/app-card": {
-    "src": "/brand/crops/essencia/app-card.jpg",
-    "width": 640,
-    "height": 714
-  },
-  "essencia/app-mobile": {
-    "src": "/brand/crops/essencia/app-mobile.jpg",
-    "width": 428,
-    "height": 772
-  },
-  "essencia/app-tag": {
-    "src": "/brand/crops/essencia/app-tag.jpg",
-    "width": 646,
-    "height": 714
-  },
   "essencia/brandboard": {
     "src": "/brand/concept-01.png",
     "width": 1200,
@@ -29,69 +9,9 @@
     "width": 750,
     "height": 360
   },
-  "essencia/logo": {
-    "src": "/brand/crops/essencia/logo.png",
-    "width": 844,
-    "height": 568
-  },
-  "essencia/logo-name": {
-    "src": "/brand/crops/essencia/logo-name.png",
-    "width": 844,
-    "height": 76
-  },
-  "essencia/logo-negative": {
-    "src": "/brand/crops/essencia/logo-negative.png",
-    "width": 844,
-    "height": 568
-  },
-  "essencia/logo-negative-name": {
-    "src": "/brand/crops/essencia/logo-negative-name.png",
-    "width": 844,
-    "height": 76
-  },
-  "essencia/logo-negative-sun": {
-    "src": "/brand/crops/essencia/logo-negative-sun.png",
-    "width": 844,
-    "height": 416
-  },
-  "essencia/logo-negative-tagline": {
-    "src": "/brand/crops/essencia/logo-negative-tagline.png",
-    "width": 844,
-    "height": 76
-  },
-  "essencia/logo-sun": {
-    "src": "/brand/crops/essencia/logo-sun.png",
-    "width": 844,
-    "height": 416
-  },
-  "essencia/logo-tagline": {
-    "src": "/brand/crops/essencia/logo-tagline.png",
-    "width": 844,
-    "height": 76
-  },
-  "essencia/panel-elements": {
-    "src": "/brand/crops/essencia/panel-elements.jpg",
-    "width": 1150,
-    "height": 400
-  },
-  "essencia/panel-type": {
-    "src": "/brand/crops/essencia/panel-type.jpg",
-    "width": 1050,
-    "height": 350
-  },
   "essencia/photo-01": {
     "src": "/brand/crops/essencia/photo-01.jpg",
     "width": 382,
-    "height": 326
-  },
-  "essencia/photo-02": {
-    "src": "/brand/crops/essencia/photo-02.jpg",
-    "width": 352,
-    "height": 326
-  },
-  "essencia/photo-03": {
-    "src": "/brand/crops/essencia/photo-03.jpg",
-    "width": 390,
     "height": 326
   },
   "essencia/photo-hero": {
@@ -99,240 +19,30 @@
     "width": 1060,
     "height": 988
   },
-  "essencia/type-primary": {
-    "src": "/brand/crops/essencia/type-primary.png",
-    "width": 420,
-    "height": 200
-  },
-  "essencia/type-secondary": {
-    "src": "/brand/crops/essencia/type-secondary.png",
-    "width": 240,
-    "height": 140
-  },
   "images/editorial-01": {
     "src": "/images/editorial-01.jpg",
     "width": 1060,
     "height": 988
-  },
-  "origem/app-box": {
-    "src": "/brand/crops/origem/app-box.jpg",
-    "width": 680,
-    "height": 828
-  },
-  "origem/app-card": {
-    "src": "/brand/crops/origem/app-card.jpg",
-    "width": 574,
-    "height": 876
-  },
-  "origem/app-mobile": {
-    "src": "/brand/crops/origem/app-mobile.jpg",
-    "width": 444,
-    "height": 876
-  },
-  "origem/app-tag": {
-    "src": "/brand/crops/origem/app-tag.jpg",
-    "width": 414,
-    "height": 876
   },
   "origem/brandboard": {
     "src": "/brand/concept-03.png",
     "width": 1448,
     "height": 1086
   },
-  "origem/detail-seal": {
-    "src": "/brand/crops/origem/detail-seal.jpg",
-    "width": 284,
-    "height": 244
-  },
-  "origem/el-lines": {
-    "src": "/brand/crops/origem/el-lines.png",
-    "width": 292,
-    "height": 280
-  },
-  "origem/el-symbol": {
-    "src": "/brand/crops/origem/el-symbol.png",
-    "width": 308,
-    "height": 300
-  },
-  "origem/logo": {
-    "src": "/brand/crops/origem/logo.png",
-    "width": 1040,
-    "height": 696
-  },
-  "origem/logo-body": {
-    "src": "/brand/crops/origem/logo-body.png",
-    "width": 1040,
-    "height": 372
-  },
-  "origem/logo-name": {
-    "src": "/brand/crops/origem/logo-name.png",
-    "width": 1040,
-    "height": 284
-  },
-  "origem/logo-positive": {
-    "src": "/brand/crops/origem/logo-positive.png",
-    "width": 1040,
-    "height": 696
-  },
-  "origem/logo-positive-body": {
-    "src": "/brand/crops/origem/logo-positive-body.png",
-    "width": 1040,
-    "height": 372
-  },
-  "origem/logo-positive-name": {
-    "src": "/brand/crops/origem/logo-positive-name.png",
-    "width": 1040,
-    "height": 284
-  },
-  "origem/logo-positive-symbol": {
-    "src": "/brand/crops/origem/logo-positive-symbol.png",
-    "width": 360,
-    "height": 320
-  },
-  "origem/logo-positive-tagline": {
-    "src": "/brand/crops/origem/logo-positive-tagline.png",
-    "width": 1040,
-    "height": 92
-  },
-  "origem/logo-positive-wordmark": {
-    "src": "/brand/crops/origem/logo-positive-wordmark.png",
-    "width": 660,
-    "height": 204
-  },
-  "origem/logo-symbol": {
-    "src": "/brand/crops/origem/logo-symbol.png",
-    "width": 360,
-    "height": 320
-  },
-  "origem/logo-tagline": {
-    "src": "/brand/crops/origem/logo-tagline.png",
-    "width": 1040,
-    "height": 92
-  },
-  "origem/logo-wordmark": {
-    "src": "/brand/crops/origem/logo-wordmark.png",
-    "width": 660,
-    "height": 204
-  },
-  "origem/panel-elements": {
-    "src": "/brand/crops/origem/panel-elements.jpg",
-    "width": 762,
-    "height": 876
-  },
   "origem/photo-hero": {
     "src": "/brand/crops/origem/photo-hero.jpg",
     "width": 910,
     "height": 822
-  },
-  "origem/var-horizontal": {
-    "src": "/brand/crops/origem/var-horizontal.png",
-    "width": 344,
-    "height": 140
-  },
-  "origem/var-seal": {
-    "src": "/brand/crops/origem/var-seal.png",
-    "width": 312,
-    "height": 344
-  },
-  "origem/var-vertical": {
-    "src": "/brand/crops/origem/var-vertical.png",
-    "width": 412,
-    "height": 344
-  },
-  "solar/app-box": {
-    "src": "/brand/crops/solar/app-box.jpg",
-    "width": 648,
-    "height": 694
-  },
-  "solar/app-card": {
-    "src": "/brand/crops/solar/app-card.jpg",
-    "width": 588,
-    "height": 634
-  },
-  "solar/app-mobile": {
-    "src": "/brand/crops/solar/app-mobile.jpg",
-    "width": 456,
-    "height": 764
-  },
-  "solar/app-tag": {
-    "src": "/brand/crops/solar/app-tag.jpg",
-    "width": 492,
-    "height": 634
   },
   "solar/brandboard": {
     "src": "/brand/concept-02.png",
     "width": 1171,
     "height": 1343
   },
-  "solar/detail-print": {
-    "src": "/brand/crops/solar/detail-print.jpg",
-    "width": 330,
-    "height": 280
-  },
   "solar/lines": {
     "src": "/brand/crops/solar/lines.jpg",
     "width": 380,
     "height": 280
-  },
-  "solar/logo": {
-    "src": "/brand/crops/solar/logo.png",
-    "width": 700,
-    "height": 524
-  },
-  "solar/logo-body": {
-    "src": "/brand/crops/solar/logo-body.png",
-    "width": 700,
-    "height": 340
-  },
-  "solar/logo-name": {
-    "src": "/brand/crops/solar/logo-name.png",
-    "width": 700,
-    "height": 72
-  },
-  "solar/logo-negative": {
-    "src": "/brand/crops/solar/logo-negative.png",
-    "width": 700,
-    "height": 524
-  },
-  "solar/logo-negative-body": {
-    "src": "/brand/crops/solar/logo-negative-body.png",
-    "width": 700,
-    "height": 340
-  },
-  "solar/logo-negative-name": {
-    "src": "/brand/crops/solar/logo-negative-name.png",
-    "width": 700,
-    "height": 72
-  },
-  "solar/logo-negative-sun": {
-    "src": "/brand/crops/solar/logo-negative-sun.png",
-    "width": 700,
-    "height": 384
-  },
-  "solar/logo-negative-symbol": {
-    "src": "/brand/crops/solar/logo-negative-symbol.png",
-    "width": 364,
-    "height": 184
-  },
-  "solar/logo-negative-tagline": {
-    "src": "/brand/crops/solar/logo-negative-tagline.png",
-    "width": 700,
-    "height": 68
-  },
-  "solar/logo-sun": {
-    "src": "/brand/crops/solar/logo-sun.png",
-    "width": 700,
-    "height": 384
-  },
-  "solar/logo-symbol": {
-    "src": "/brand/crops/solar/logo-symbol.png",
-    "width": 364,
-    "height": 184
-  },
-  "solar/logo-tagline": {
-    "src": "/brand/crops/solar/logo-tagline.png",
-    "width": 700,
-    "height": 68
   },
   "solar/photo-01": {
     "src": "/brand/crops/solar/photo-01.jpg",
@@ -343,10 +53,5 @@
     "src": "/brand/crops/solar/photo-02.jpg",
     "width": 718,
     "height": 546
-  },
-  "solar/photo-hero": {
-    "src": "/brand/crops/solar/photo-hero.jpg",
-    "width": 1170,
-    "height": 742
   }
 }

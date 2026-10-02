@@ -1,0 +1,452 @@
+{
+  "essencia/light": {
+    "src": "/brand/marks/essencia/light.png",
+    "width": 1149,
+    "height": 822
+  },
+  "essencia/light-sun": {
+    "src": "/brand/marks/essencia/light-sun.png",
+    "width": 1108,
+    "height": 642,
+    "box": {
+      "left": 0,
+      "top": 0,
+      "width": 96.432,
+      "height": 78.102
+    },
+    "origin": {
+      "x": 48,
+      "y": 257
+    }
+  },
+  "essencia/light-name": {
+    "src": "/brand/marks/essencia/light-name.png",
+    "width": 1095,
+    "height": 105,
+    "box": {
+      "left": 4.526,
+      "top": 75.912,
+      "width": 95.3,
+      "height": 12.774
+    },
+    "origin": {
+      "x": 100,
+      "y": 881
+    }
+  },
+  "essencia/light-tagline": {
+    "src": "/brand/marks/essencia/light-tagline.png",
+    "width": 1094,
+    "height": 54,
+    "box": {
+      "left": 4.787,
+      "top": 93.431,
+      "width": 95.213,
+      "height": 6.569
+    },
+    "origin": {
+      "x": 103,
+      "y": 1025
+    }
+  },
+  "essencia/dark": {
+    "src": "/brand/marks/essencia/dark.png",
+    "width": 1149,
+    "height": 822
+  },
+  "essencia/dark-sun": {
+    "src": "/brand/marks/essencia/dark-sun.png",
+    "width": 1108,
+    "height": 642,
+    "box": {
+      "left": 0,
+      "top": 0,
+      "width": 96.432,
+      "height": 78.102
+    },
+    "origin": {
+      "x": 48,
+      "y": 257
+    }
+  },
+  "essencia/dark-name": {
+    "src": "/brand/marks/essencia/dark-name.png",
+    "width": 1095,
+    "height": 105,
+    "box": {
+      "left": 4.526,
+      "top": 75.912,
+      "width": 95.3,
+      "height": 12.774
+    },
+    "origin": {
+      "x": 100,
+      "y": 881
+    }
+  },
+  "essencia/dark-tagline": {
+    "src": "/brand/marks/essencia/dark-tagline.png",
+    "width": 1094,
+    "height": 54,
+    "box": {
+      "left": 4.787,
+      "top": 93.431,
+      "width": 95.213,
+      "height": 6.569
+    },
+    "origin": {
+      "x": 103,
+      "y": 1025
+    }
+  },
+  "solar/light": {
+    "src": "/brand/marks/solar/light.png",
+    "width": 1105,
+    "height": 793
+  },
+  "solar/light-symbol": {
+    "src": "/brand/marks/solar/light-symbol.png",
+    "width": 527,
+    "height": 280,
+    "box": {
+      "left": 29.774,
+      "top": 0,
+      "width": 47.692,
+      "height": 35.309
+    },
+    "origin": {
+      "x": 410,
+      "y": 240
+    }
+  },
+  "solar/light-sun": {
+    "src": "/brand/marks/solar/light-sun.png",
+    "width": 1022,
+    "height": 294,
+    "box": {
+      "left": 0,
+      "top": 36.066,
+      "width": 92.489,
+      "height": 37.074
+    },
+    "origin": {
+      "x": 81,
+      "y": 526
+    }
+  },
+  "solar/light-name": {
+    "src": "/brand/marks/solar/light-name.png",
+    "width": 1045,
+    "height": 101,
+    "box": {
+      "left": 5.43,
+      "top": 74.905,
+      "width": 94.57,
+      "height": 12.736
+    },
+    "origin": {
+      "x": 141,
+      "y": 834
+    }
+  },
+  "solar/light-tagline": {
+    "src": "/brand/marks/solar/light-tagline.png",
+    "width": 1046,
+    "height": 61,
+    "box": {
+      "left": 4.525,
+      "top": 92.308,
+      "width": 94.661,
+      "height": 7.692
+    },
+    "origin": {
+      "x": 131,
+      "y": 972
+    }
+  },
+  "solar/light-body": {
+    "src": "/brand/marks/solar/light-body.png",
+    "width": 1105,
+    "height": 507,
+    "box": {
+      "left": 0,
+      "top": 36.066,
+      "width": 100,
+      "height": 63.934
+    },
+    "origin": {
+      "x": 81,
+      "y": 526
+    }
+  },
+  "solar/dark": {
+    "src": "/brand/marks/solar/dark.png",
+    "width": 1105,
+    "height": 793
+  },
+  "solar/dark-symbol": {
+    "src": "/brand/marks/solar/dark-symbol.png",
+    "width": 527,
+    "height": 280,
+    "box": {
+      "left": 29.774,
+      "top": 0,
+      "width": 47.692,
+      "height": 35.309
+    },
+    "origin": {
+      "x": 410,
+      "y": 240
+    }
+  },
+  "solar/dark-sun": {
+    "src": "/brand/marks/solar/dark-sun.png",
+    "width": 1022,
+    "height": 294,
+    "box": {
+      "left": 0,
+      "top": 36.066,
+      "width": 92.489,
+      "height": 37.074
+    },
+    "origin": {
+      "x": 81,
+      "y": 526
+    }
+  },
+  "solar/dark-name": {
+    "src": "/brand/marks/solar/dark-name.png",
+    "width": 1045,
+    "height": 101,
+    "box": {
+      "left": 5.43,
+      "top": 74.905,
+      "width": 94.57,
+      "height": 12.736
+    },
+    "origin": {
+      "x": 141,
+      "y": 834
+    }
+  },
+  "solar/dark-tagline": {
+    "src": "/brand/marks/solar/dark-tagline.png",
+    "width": 1046,
+    "height": 61,
+    "box": {
+      "left": 4.525,
+      "top": 92.308,
+      "width": 94.661,
+      "height": 7.692
+    },
+    "origin": {
+      "x": 131,
+      "y": 972
+    }
+  },
+  "solar/dark-body": {
+    "src": "/brand/marks/solar/dark-body.png",
+    "width": 1105,
+    "height": 507,
+    "box": {
+      "left": 0,
+      "top": 36.066,
+      "width": 100,
+      "height": 63.934
+    },
+    "origin": {
+      "x": 81,
+      "y": 526
+    }
+  },
+  "origem/dark": {
+    "src": "/brand/marks/origem/dark.png",
+    "width": 1123,
+    "height": 880
+  },
+  "origem/dark-symbol": {
+    "src": "/brand/marks/origem/dark-symbol.png",
+    "width": 469,
+    "height": 450,
+    "box": {
+      "left": 29.029,
+      "top": 0,
+      "width": 41.763,
+      "height": 51.136
+    },
+    "origin": {
+      "x": 489,
+      "y": 139
+    }
+  },
+  "origem/dark-wordmark": {
+    "src": "/brand/marks/origem/dark-wordmark.png",
+    "width": 855,
+    "height": 250,
+    "box": {
+      "left": 11.042,
+      "top": 50.227,
+      "width": 76.135,
+      "height": 28.409
+    },
+    "origin": {
+      "x": 287,
+      "y": 581
+    }
+  },
+  "origem/dark-descriptor": {
+    "src": "/brand/marks/origem/dark-descriptor.png",
+    "width": 933,
+    "height": 83,
+    "box": {
+      "left": 8.994,
+      "top": 80.568,
+      "width": 83.081,
+      "height": 9.432
+    },
+    "origin": {
+      "x": 264,
+      "y": 848
+    }
+  },
+  "origem/dark-tagline": {
+    "src": "/brand/marks/origem/dark-tagline.png",
+    "width": 1123,
+    "height": 53,
+    "box": {
+      "left": 0,
+      "top": 93.977,
+      "width": 100,
+      "height": 6.023
+    },
+    "origin": {
+      "x": 163,
+      "y": 966
+    }
+  },
+  "origem/dark-body": {
+    "src": "/brand/marks/origem/dark-body.png",
+    "width": 1123,
+    "height": 438,
+    "box": {
+      "left": 0,
+      "top": 50.227,
+      "width": 100,
+      "height": 49.773
+    },
+    "origin": {
+      "x": 163,
+      "y": 581
+    }
+  },
+  "origem/dark-name": {
+    "src": "/brand/marks/origem/dark-name.png",
+    "width": 933,
+    "height": 350,
+    "box": {
+      "left": 8.994,
+      "top": 50.227,
+      "width": 83.081,
+      "height": 39.773
+    },
+    "origin": {
+      "x": 264,
+      "y": 581
+    }
+  },
+  "origem/light": {
+    "src": "/brand/marks/origem/light.png",
+    "width": 1123,
+    "height": 880
+  },
+  "origem/light-symbol": {
+    "src": "/brand/marks/origem/light-symbol.png",
+    "width": 469,
+    "height": 450,
+    "box": {
+      "left": 29.029,
+      "top": 0,
+      "width": 41.763,
+      "height": 51.136
+    },
+    "origin": {
+      "x": 489,
+      "y": 139
+    }
+  },
+  "origem/light-wordmark": {
+    "src": "/brand/marks/origem/light-wordmark.png",
+    "width": 855,
+    "height": 250,
+    "box": {
+      "left": 11.042,
+      "top": 50.227,
+      "width": 76.135,
+      "height": 28.409
+    },
+    "origin": {
+      "x": 287,
+      "y": 581
+    }
+  },
+  "origem/light-descriptor": {
+    "src": "/brand/marks/origem/light-descriptor.png",
+    "width": 933,
+    "height": 83,
+    "box": {
+      "left": 8.994,
+      "top": 80.568,
+      "width": 83.081,
+      "height": 9.432
+    },
+    "origin": {
+      "x": 264,
+      "y": 848
+    }
+  },
+  "origem/light-tagline": {
+    "src": "/brand/marks/origem/light-tagline.png",
+    "width": 1123,
+    "height": 53,
+    "box": {
+      "left": 0,
+      "top": 93.977,
+      "width": 100,
+      "height": 6.023
+    },
+    "origin": {
+      "x": 163,
+      "y": 966
+    }
+  },
+  "origem/light-body": {
+    "src": "/brand/marks/origem/light-body.png",
+    "width": 1123,
+    "height": 438,
+    "box": {
+      "left": 0,
+      "top": 50.227,
+      "width": 100,
+      "height": 49.773
+    },
+    "origin": {
+      "x": 163,
+      "y": 581
+    }
+  },
+  "origem/light-name": {
+    "src": "/brand/marks/origem/light-name.png",
+    "width": 933,
+    "height": 350,
+    "box": {
+      "left": 8.994,
+      "top": 50.227,
+      "width": 83.081,
+      "height": 39.773
+    },
+    "origin": {
+      "x": 264,
+      "y": 581
+    }
+  }
+}

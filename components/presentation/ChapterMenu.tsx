@@ -49,7 +49,7 @@ export function ChapterMenu() {
         >
           <div className="flex h-16 items-center justify-between px-5 lg:h-20 lg:px-10">
             <p className="flex items-baseline gap-3">
-              <span className="font-display text-xl tracking-[0.08em]">{brand.name}</span>
+              <span className="wordmark text-[0.95rem] font-normal">{brand.name}</span>
               <span className="eyebrow opacity-60">{brand.presentationLabel}</span>
             </p>
             <button
@@ -72,7 +72,7 @@ export function ChapterMenu() {
                 className="border-t border-ink/15 pt-5"
               >
                 <p className="eyebrow numeral opacity-50">{chapter.number}</p>
-                <h2 className="mt-3 font-display text-4xl leading-none">{chapter.label}</h2>
+                <h2 className="mt-3 font-display text-3xl leading-none">{chapter.label}</h2>
                 <ol className="mt-6 space-y-1">
                   {slides.map((s, i) =>
                     s.chapter === chapter.id ? (

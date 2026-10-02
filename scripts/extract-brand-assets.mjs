@@ -1,13 +1,11 @@
 /**
- * Extrai os recortes usados na apresentação a partir dos três brandboards
- * originais em /public/brand. Nada é redesenhado: os pixels vêm dos PNGs.
+ * Extrai dos três brandboards (/public/brand/concept-0X.png) os recortes que
+ * NÃO são marcas: fotografias editoriais e elementos gráficos.
+ * As marcas vêm dos PNGs oficiais — veja scripts/build-marks.mjs.
  *
- * - "crop": recorte simples (fotos, mockups, painéis), reamostrado 2x com
- *   lanczos para exibir com mais suavidade em telas grandes.
- * - "logo": recorte com fundo removido. O fundo local é estimado e cada pixel
- *   é separado em tinta + transparência, preservando o antialiasing original.
- *   Variantes "recolor" trocam apenas a cor de uma das tintas (ex.: versão
- *   negativa para o comparativo em fundo bordô).
+ * - "crop": recorte simples de fotografia, reamostrado 2x (lanczos).
+ * - "element": grafismo com fundo removido. O fundo local é estimado e cada
+ *   pixel é separado em tinta + transparência, preservando o antialiasing.
  *
  * Uso: npm run extract-assets
  */
@@ -24,124 +22,30 @@ const SOURCES = {
   origem: "public/brand/concept-03.png",
 };
 
-/** Recortes simples: [left, top, width, height] em pixels do PNG original. */
+/** Fotografias: [left, top, width, height] em pixels do brandboard. */
 const CROPS = {
   essencia: {
     "photo-hero": [498, 0, 530, 494],
     "photo-01": [599, 722, 191, 163],
-    "photo-02": [798, 722, 176, 163],
-    "photo-03": [982, 722, 195, 163],
-    "app-tag": [0, 931, 323, 357],
-    "app-card": [328, 931, 320, 357],
-    "app-box": [653, 931, 314, 357],
-    "app-mobile": [970, 904, 214, 386],
-    "panel-elements": [0, 695, 575, 200],
-    "panel-type": [655, 505, 525, 175],
   },
   solar: {
-    "photo-hero": [436, 0, 585, 371],
     "photo-01": [302, 586, 292, 273],
     "photo-02": [812, 586, 359, 273],
     "lines": [852, 442, 190, 140],
-    "app-tag": [0, 918, 246, 317],
-    "app-card": [251, 918, 294, 317],
-    "app-box": [549, 888, 324, 347],
-    "app-mobile": [903, 864, 228, 382],
-    "detail-print": [598, 1000, 165, 140],
   },
   origem: {
     "photo-hero": [798, 0, 455, 411],
-    "panel-elements": [0, 648, 381, 438],
-    "app-box": [383, 672, 340, 414],
-    "app-tag": [726, 648, 207, 438],
-    "app-card": [936, 648, 287, 438],
-    "app-mobile": [1226, 648, 222, 438],
-    "detail-seal": [512, 846, 142, 122],
   },
 };
 
 /**
- * Logos e elementos com fundo removido.
+ * Elementos gráficos com fundo removido.
  * rect: área de trabalho. inks: cores sólidas de referência (amostradas).
- * exclude: retângulos (coordenadas absolutas) forçados a fundo — fios de
- * cabelo da fotografia que invadem a área da logo.
- * parts: sub-recortes [left, top, width, height] gerados a partir da logo limpa.
- * inkZones: limita onde cada tinta pode existir (evita reflexos da foto).
- * maxResidual: descarta pixels que não se explicam por nenhuma tinta.
- * recolor: variantes com a tinta de índice N trocada por outra cor da paleta.
+ * exclude: retângulos (coordenadas absolutas) forçados a fundo.
  */
 const LOGOS = {
   essencia: {
-    logo: {
-      rect: [40, 48, 422, 284],
-      inks: ["#3b2422", "#c4925c"],
-      exclude: [
-        [405, 48, 70, 45],
-        [412, 93, 18, 50],
-        [430, 48, 40, 140],
-        [445, 48, 30, 284],
-      ],
-      parts: {
-        "logo-sun": [40, 48, 422, 208],
-        "logo-name": [40, 256, 422, 38],
-        "logo-tagline": [40, 294, 422, 38],
-      },
-      recolor: { "logo-negative": { 0: "#f8f3ec" } },
-    },
     lines: { rect: [0, 714, 375, 180], inks: ["#c4925c"], exclude: [] },
-    "type-primary": { rect: [662, 528, 210, 100], inks: ["#4a2626", "#c9a274"], exclude: [] },
-    "type-secondary": { rect: [950, 542, 120, 70], inks: ["#1c1414"], exclude: [] },
-  },
-  solar: {
-    logo: {
-      rect: [70, 50, 350, 262],
-      inks: ["#5c1220", "#c79a68"],
-      exclude: [
-        [386, 50, 40, 195],
-        [350, 50, 36, 92],
-        [395, 308, 30, 10],
-        [419, 240, 5, 80],
-        [416, 245, 6, 35],
-        [66, 46, 120, 50],
-        [325, 50, 25, 60],
-        [290, 46, 60, 22],
-      ],
-      // O dourado só existe nos raios e no traço sob "SUN".
-      inkZones: { 1: [[150, 50, 200, 95], [70, 188, 262, 64]] },
-      maxResidual: 0.12,
-      parts: {
-        "logo-symbol": [168, 50, 182, 92],
-        "logo-body": [70, 142, 350, 170],
-        "logo-sun": [70, 50, 350, 192],
-        "logo-name": [70, 242, 350, 36],
-        "logo-tagline": [70, 278, 350, 34],
-      },
-      recolor: { "logo-negative": { 0: "#f8ede1" } },
-    },
-  },
-  origem: {
-    logo: {
-      rect: [150, 22, 520, 348],
-      inks: ["#e9c597", "#f3d9c6"],
-      exclude: [],
-      parts: {
-        "logo-symbol": [318, 26, 180, 160],
-        "logo-body": [150, 184, 520, 186],
-        "logo-wordmark": [240, 182, 330, 102],
-        "logo-name": [150, 182, 520, 142],
-        "logo-tagline": [150, 324, 520, 46],
-      },
-      recolorParts: {
-        // Versão positiva: texto em bordô, símbolo mantém o dourado original
-        // (mesma lógica da "variação vertical" presente no brandboard).
-        "logo-positive": { below: 184, color: "#5a0e1a" },
-      },
-    },
-    "var-vertical": { rect: [12, 450, 206, 172], inks: ["#5a1420", "#c99a5c"], exclude: [] },
-    "var-horizontal": { rect: [226, 500, 172, 70], inks: ["#5a1420", "#c99a5c"], exclude: [] },
-    "var-seal": { rect: [418, 446, 156, 172], inks: ["#5a1420", "#c99a5c"], exclude: [] },
-    "el-symbol": { rect: [38, 722, 154, 150], inks: ["#e9c597"], exclude: [] },
-    "el-lines": { rect: [220, 728, 146, 140], inks: ["#e9c597"], exclude: [] },
   },
 };
 

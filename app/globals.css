@@ -11,10 +11,11 @@
   --color-night: #2a1717;
   --color-stone: #bdb2a8;
 
-  --font-display: var(--font-instrument-serif), "Times New Roman", serif;
-  --font-sans: var(--font-instrument-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-open-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-open-sans), "Helvetica Neue", Arial, sans-serif;
   --font-essencia: var(--font-italiana), "Didot", serif;
   --font-essencia-support: var(--font-jost), "Futura", sans-serif;
+  --font-origem: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
 
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -78,12 +79,30 @@ body {
   }
 }
 
+/*
+ * Títulos: Open Sans leve, entrelinha curta e espaçamento levemente fechado.
+ * Uma única família na apresentação inteira; a hierarquia vem do peso e do tamanho.
+ */
+.font-display {
+  font-weight: 300;
+  letter-spacing: -0.022em;
+}
+
+/* Assinatura em caixa alta espaçada (capa, encerramento, navegação) */
+.wordmark {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  letter-spacing: 0.34em;
+  margin-right: -0.34em; /* compensa o espaço após a última letra */
+  text-transform: uppercase;
+}
+
 /* Rótulos editoriais pequenos */
 .eyebrow {
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   line-height: 1.4;
 }

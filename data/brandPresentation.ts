@@ -5,10 +5,11 @@
  * Os componentes apenas leem este arquivo: para trocar um título, uma cor
  * ou a ordem das telas, edite somente este arquivo.
  *
- * Imagens: as chaves de `asset("...")` estão em data/brandAssets.json
- * (gerado por `npm run extract-assets` a partir de /public/brand).
+ * Marcas: `mark()` / `markPart()` leem data/marks.json, gerado por
+ * `npm run build-marks` a partir dos PNGs oficiais em /public/brand/logos.
+ * Fotos e grafismos: `asset()` lê data/brandAssets.json (`npm run extract-assets`).
  */
-import { asset, type Asset } from "./assets";
+import { asset, mark, markPart, type Asset } from "./assets";
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -58,7 +59,6 @@ export const themes = {
   closing: { bg: "#3D0F18", fg: neutral.paper, accent: neutral.stone, tone: "dark" },
 
   essencia: { bg: "#F8F3EC", fg: "#3E2825", accent: "#D4B483", tone: "light" },
-  essenciaDark: { bg: "#3E2825", fg: "#F8F3EC", accent: "#D4B483", tone: "dark" },
 
   solarIvory: { bg: "#F8EDE1", fg: "#5A0E1A", accent: "#D4AF7C", tone: "light" },
   solarBordo: { bg: "#5A0E1A", fg: "#F8EDE1", accent: "#D4AF7C", tone: "dark" },
@@ -124,25 +124,21 @@ export const slides: SlideDef[] = [
   { id: "essencia-cores", chapter: "essencia", label: "Cores", theme: themes.essencia },
   { id: "essencia-tipografia", chapter: "essencia", label: "Tipografia", theme: themes.essencia },
   { id: "essencia-linguagem", chapter: "essencia", label: "Linguagem gráfica", theme: themes.essencia },
-  { id: "essencia-aplicacoes", chapter: "essencia", label: "Aplicações", theme: themes.essenciaDark },
 
   { id: "solar", chapter: "solar", label: "Abertura", theme: themes.solarBordo },
   { id: "solar-defesa", chapter: "solar", label: "Defesa do conceito", theme: themes.solarIvory },
   { id: "solar-simbolo", chapter: "solar", label: "O símbolo", theme: themes.solarIvory },
   { id: "solar-contraste", chapter: "solar", label: "Bordô + dourado", theme: themes.solarIvory, chrome: { tl: "dark", bl: "dark" } },
   { id: "solar-sistema", chapter: "solar", label: "Sistema visual", theme: themes.solarIvory },
-  { id: "solar-aplicacoes", chapter: "solar", label: "Aplicações", theme: themes.solarBordo },
 
   { id: "origem", chapter: "origem", label: "Abertura", theme: themes.origemBordo },
   { id: "origem-defesa", chapter: "origem", label: "Defesa do conceito", theme: themes.origemBordo },
   { id: "origem-construcao", chapter: "origem", label: "Construção do símbolo", theme: themes.origemBordo },
   { id: "origem-marcas", chapter: "origem", label: "Símbolo + wordmark", theme: themes.origemBordo, chrome: { bl: "light", br: "light" } },
   { id: "origem-sistema", chapter: "origem", label: "Paleta e sistema", theme: themes.origemIvory },
-  { id: "origem-aplicacoes", chapter: "origem", label: "Aplicações", theme: themes.origemBordo },
 
   { id: "comparativo", chapter: "comparativo", label: "Três caminhos", theme: themes.paper },
   { id: "as-tres-marcas", chapter: "comparativo", label: "As três marcas", theme: themes.paper },
-  { id: "aplicadas", chapter: "comparativo", label: "Aplicadas ao produto", theme: themes.paper },
   { id: "encerramento", chapter: "comparativo", label: "Encerramento", theme: themes.closing },
 ];
 
@@ -201,13 +197,12 @@ export const concepts = {
     name: "Essência",
     summary: "Tipográfico, editorial e minimalista.",
     keywords: ["Tipografia", "Movimento", "Editorial"],
-    brandboard: asset("essencia/brandboard"),
-    preview: asset("essencia/app-tag"),
-    product: asset("essencia/app-box"),
     logo: {
-      light: asset("essencia/logo"),
-      dark: asset("essencia/logo-negative"),
+      light: mark("essencia/light"),
+      dark: mark("essencia/dark"),
     },
+    /** Prévia na tela "Escolha um caminho" */
+    preview: { bg: "#F8F3EC", logo: mark("essencia/light") },
     opening: {
       title: "Essência",
       subtitle: ["Quando o movimento do cabelo", "se transforma em identidade."],
@@ -219,18 +214,18 @@ export const concepts = {
         "Linhas delicadas inspiradas no movimento dos fios complementam a composição sem transformar cabelo ou sol em símbolos literais.",
         "O resultado é uma identidade editorial, feminina e contemporânea.",
       ],
-      /** Detalhes ampliados: recorte da logo (posição em % e zoom) */
+      /** Detalhes ampliados da marca: ponto de foco (%) e zoom */
       details: [
-        { label: "O gesto do fio", position: "4% 50%", zoom: 2.2 },
-        { label: "O arco de luz", position: "96% 4%", zoom: 2 },
+        { label: "O gesto do fio", position: "0% 52%", zoom: 2.2 },
+        { label: "O arco de luz", position: "100% 0%", zoom: 2 },
       ],
     },
     construction: {
       eyebrow: "Construção",
       parts: [
-        asset("essencia/logo-sun"),
-        asset("essencia/logo-name"),
-        asset("essencia/logo-tagline"),
+        markPart("essencia/light-sun"),
+        markPart("essencia/light-name"),
+        markPart("essencia/light-tagline"),
       ],
       callouts: [
         { title: "Tipografia", text: "Traços finos e proporções alongadas." },
@@ -258,12 +253,10 @@ export const concepts = {
       primary: {
         label: "Tipografia principal",
         traits: ["Elegante", "Moderna", "Feminina"],
-        specimen: asset("essencia/type-primary"),
       },
       secondary: {
         label: "Tipografia de apoio",
         traits: ["Clean", "Leve", "Atemporal"],
-        specimen: asset("essencia/type-secondary"),
       },
       samples: {
         brand: "SUN Brazilian Hair",
@@ -276,18 +269,9 @@ export const concepts = {
       title: ["O fio não aparece como ilustração.", "Ele aparece como movimento."],
       line: asset("essencia/lines"),
       photo: asset("essencia/photo-01"),
-      applied: asset("essencia/app-card"),
+      /** Composição: marca negativa + linha sobre o bordô da paleta */
+      composition: { bg: "#6B2E2E", logo: mark("essencia/dark") },
       labels: ["Linha isolada", "Linha sobre fotografia", "Linha aplicada em composição"],
-    },
-    applications: {
-      eyebrow: "Aplicações",
-      title: "Essência aplicada.",
-      items: [
-        { label: "Embalagem", image: asset("essencia/app-box") },
-        { label: "Tag", image: asset("essencia/app-tag") },
-        { label: "Cartão", image: asset("essencia/app-card") },
-        { label: "Aplicação digital", image: asset("essencia/app-mobile") },
-      ] satisfies GalleryItem[],
     },
   },
 
@@ -297,13 +281,11 @@ export const concepts = {
     name: "Solar",
     summary: "A luz do nome como assinatura.",
     keywords: ["Luz", "Contraste", "Presença"],
-    brandboard: asset("solar/brandboard"),
-    preview: asset("solar/app-tag"),
-    product: asset("solar/app-box"),
     logo: {
-      light: asset("solar/logo"),
-      dark: asset("solar/logo-negative"),
+      light: mark("solar/light"),
+      dark: mark("solar/dark"),
     },
+    preview: { bg: "#5A0E1A", logo: mark("solar/dark") },
     opening: {
       title: "Solar",
       subtitle: ["A luz como assinatura."],
@@ -320,8 +302,8 @@ export const concepts = {
     },
     symbol: {
       eyebrow: "O símbolo",
-      symbol: asset("solar/logo-symbol"),
-      body: asset("solar/logo-body"),
+      symbol: markPart("solar/light-symbol"),
+      body: markPart("solar/light-body"),
       ideas: [
         { title: "Luz", text: "presença" },
         { title: "Calor", text: "proximidade" },
@@ -351,17 +333,7 @@ export const concepts = {
       ],
       photo: asset("solar/photo-02"),
       flow: asset("solar/lines"),
-    },
-    applications: {
-      eyebrow: "Aplicações",
-      title: "Solar aplicado.",
-      items: [
-        { label: "Embalagem", image: asset("solar/app-box") },
-        { label: "Tag", image: asset("solar/app-tag") },
-        { label: "Cartão", image: asset("solar/app-card") },
-        { label: "Mobile", image: asset("solar/app-mobile") },
-        { label: "Detalhes de impressão", caption: "Assinatura dourada sobre bordô.", image: asset("solar/detail-print") },
-      ] satisfies GalleryItem[],
+      symbol: mark("solar/light-symbol"),
     },
   },
 
@@ -371,18 +343,16 @@ export const concepts = {
     name: "Origem",
     summary: "Sol e cabelo em um único símbolo.",
     keywords: ["Símbolo", "Reconhecimento", "Exclusividade"],
-    brandboard: asset("origem/brandboard"),
-    preview: asset("origem/app-tag"),
-    product: asset("origem/app-box"),
     logo: {
-      light: asset("origem/logo-positive"),
-      dark: asset("origem/logo"),
+      light: mark("origem/light"),
+      dark: mark("origem/dark"),
     },
+    preview: { bg: "#7A1F2B", logo: mark("origem/dark") },
     opening: {
       title: "Origem",
       subtitle: ["Sol e cabelo em um mesmo gesto."],
-      symbol: asset("origem/logo-symbol"),
-      body: asset("origem/logo-body"),
+      symbol: markPart("origem/dark-symbol"),
+      body: markPart("origem/dark-body"),
     },
     defense: {
       title: ["Um símbolo que nasce", "do próprio nome."],
@@ -398,7 +368,7 @@ export const concepts = {
     },
     construction: {
       eyebrow: "Construção do símbolo",
-      symbol: asset("origem/logo-symbol"),
+      symbol: markPart("origem/dark-symbol"),
       steps: [
         { title: "O arco", text: "o sol" },
         { title: "As linhas", text: "os fios" },
@@ -409,15 +379,17 @@ export const concepts = {
     marks: {
       eyebrow: "Símbolo + wordmark",
       dark: [
-        { label: "Símbolo isolado", image: asset("origem/logo-symbol") },
-        { label: "SUN", image: asset("origem/logo-wordmark") },
-        { label: "SUN Brazilian Hair", image: asset("origem/logo-name") },
+        { label: "Símbolo isolado", image: mark("origem/dark-symbol") },
+        { label: "SUN", image: mark("origem/dark-wordmark") },
+        { label: "SUN Brazilian Hair", image: mark("origem/dark-name") },
       ],
-      light: [
-        { label: "Versão horizontal", image: asset("origem/var-horizontal") },
-        { label: "Versão vertical", image: asset("origem/var-vertical") },
-        { label: "Selo", image: asset("origem/var-seal") },
-      ],
+      light: {
+        symbol: mark("origem/light-symbol"),
+        name: mark("origem/light-name"),
+        full: mark("origem/light"),
+        labels: { horizontal: "Versão horizontal", vertical: "Versão vertical", seal: "Selo" },
+        seal: { top: "SUN Brazilian Hair", bottom: "Cabelo brasileiro. Sem exceção" },
+      },
     },
     system: {
       eyebrow: "Paleta e sistema",
@@ -430,22 +402,11 @@ export const concepts = {
         { name: "Ivory", hex: "#F8EFE4", role: "Base e papelaria." },
         { name: "Nude", hex: "#D9B7A1", role: "Apoio e materiais." },
       ] satisfies Swatch[],
-      lines: asset("origem/el-lines"),
-      symbol: asset("origem/el-symbol"),
+      symbolDark: mark("origem/dark-symbol"),
+      symbolLight: mark("origem/light-symbol"),
       words: ["Luz", "Beleza", "Movimento", "Natural", "Brasilidade"],
-    },
-    applications: {
-      eyebrow: "Aplicações",
-      title: ["Reconhecível", "em qualquer tamanho."],
-      scaleNote: "O símbolo mantém a leitura de 96 px a 16 px.",
       sizes: [96, 64, 40, 24, 16],
-      items: [
-        { label: "Caixa", image: asset("origem/app-box") },
-        { label: "Tag", image: asset("origem/app-tag") },
-        { label: "Selo", caption: "Selo dourado de fechamento.", image: asset("origem/detail-seal") },
-        { label: "Cartão", image: asset("origem/app-card") },
-        { label: "Mobile", image: asset("origem/app-mobile") },
-      ] satisfies GalleryItem[],
+      scaleNote: "O símbolo mantém a leitura de 96 px a 16 px.",
     },
   },
 };
@@ -467,13 +428,7 @@ export const comparison = {
     darkBackground: "#5A0E1A",
     lightBackground: neutral.paper,
     footnote:
-      "Versões positivas e negativas derivadas dos arquivos originais, apenas para comparação em condições iguais.",
-  },
-  applied: {
-    eyebrow: "Aplicadas ao produto",
-    title: "Na mão de quem escolhe.",
-    hint: "Passe o cursor para ver a embalagem. Clique para abrir o brandboard completo.",
-    open: "Ver brandboard",
+      "Versões para fundo claro e fundo bordô derivadas das marcas oficiais, apenas com troca de cor dentro de cada paleta.",
   },
 };
 

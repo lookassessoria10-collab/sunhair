@@ -4,7 +4,7 @@ Apresentação interativa, navegável em capítulos, que apresenta e defende
 três caminhos de identidade visual para a marca **SUN Brazilian Hair —
 Cabelo brasileiro. Sem exceção.**
 
-- 28 telas em 5 capítulos: Introdução, Essência, Solar, Origem e Comparativo
+- 24 telas em 5 capítulos: Introdução, Essência, Solar, Origem e Comparativo
 - Composição 16:9 no desktop; blocos verticais no mobile
 - Sem backend: site estático pronto para a Vercel
 
@@ -41,7 +41,8 @@ Abra <http://localhost:3000>.
 | `npm run start` | Serve o build de produção |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Checagem de tipos |
-| `npm run extract-assets` | Regera os recortes a partir dos brandboards |
+| `npm run build-marks` | Regera versões e partes das marcas a partir dos PNGs oficiais |
+| `npm run extract-assets` | Regera fotos e grafismos a partir dos brandboards |
 
 ---
 
@@ -56,10 +57,10 @@ app/
 components/
   presentation/         motor da apresentação
     Presentation.tsx    estado, teclado, tela ativa, links diretos
-    Chrome.tsx          navegação fixa: capítulos, progresso, 01 / 28, setas
+    Chrome.tsx          navegação fixa: capítulos, progresso, 01 / 24, setas
     ChapterMenu.tsx     índice completo em tela cheia
     Slide.tsx           moldura de cada tela (100svh no desktop)
-  slides/               as 28 telas, uma pasta lógica por capítulo
+  slides/               as 24 telas, um arquivo por capítulo
     intro.tsx           00 — Capa, A marca, Posicionamento, Desafio, Caminhos
     essencia.tsx        01 — Essência
     solar.tsx           02 — Solar
@@ -67,17 +68,21 @@ components/
     comparison.tsx      04 — Comparativo e encerramento
     registry.tsx        liga cada id de tela ao componente
   ui/                   peças reutilizáveis (Reveal, MaskReveal, ParallaxImage,
-                        BrandImage, GalleryTile, Lightbox, Layout…)
+                        BrandImage, Lightbox, Layout…)
 data/
   brandPresentation.ts  TODO o conteúdo: textos, cores, conceitos, ordem das telas
-  brandAssets.json      manifesto de imagens (gerado pelo script)
-  assets.ts             helper tipado para o manifesto
+  marks.json            manifesto das marcas e de suas partes (gerado)
+  brandAssets.json      manifesto de fotos e grafismos (gerado)
+  assets.ts             helpers tipados: mark(), markPart(), asset()
 public/
+  brand/logos/          MARCAS OFICIAIS em PNG transparente (fonte única)
+  brand/marks/          versões claro/bordô e partes das marcas (geradas)
   brand/concept-0X.png  brandboards originais
-  brand/crops/          recortes extraídos dos brandboards (gerados)
+  brand/crops/          fotos e grafismos extraídos dos brandboards (gerados)
   images/               fotografias editoriais da introdução
 scripts/
-  extract-brand-assets.mjs  extração dos recortes e das marcas com transparência
+  build-marks.mjs           versões e partes das marcas oficiais
+  extract-brand-assets.mjs  fotos e grafismos dos brandboards
 ```
 
 ---
@@ -110,8 +115,8 @@ ordem de envio:
 | 02 Solar | `public/brand/concept-02.png` | 2ª imagem | sol com raios delicados, bordô + dourado |
 | 03 Origem | `public/brand/concept-03.png` | 1ª imagem | círculo solar + fios, versões horizontal, vertical e selo |
 
-> O brandboard de Essência traz escrito "CONCEITO 3" no topo, porque é o texto
-> original da imagem. Ele aparece quando o brandboard completo é aberto em tela cheia.
+Os brandboards são usados apenas como fonte de fotos, paletas e grafismos.
+As marcas vêm dos PNGs oficiais (veja **Marcas**).
 
 ### Paletas (hexadecimais impressos nos brandboards)
 
@@ -121,53 +126,61 @@ ordem de envio:
 
 ---
 
-## Imagens e marcas
+## Marcas
 
-Nenhuma marca foi redesenhada. Todas as logos, símbolos e mockups são **recortes
-dos PNGs originais**, gerados por `scripts/extract-brand-assets.mjs`:
+As marcas vêm dos **PNGs oficiais transparentes** em `public/brand/logos/`
+(`essencia.png`, `solar.png`, `origem.png`). Nenhuma foi redesenhada.
+`scripts/build-marks.mjs` gera a partir delas:
 
-- **Recortes simples** (fotos, mockups): reamostrados 2× (lanczos).
-- **Marcas com fundo transparente:** o script estima o fundo local e separa
-  tinta e transparência pixel a pixel, preservando o antialiasing original.
-  Resíduos de cabelo da fotografia são removidos por zonas de exclusão e por
-  um filtro de fragmentos isolados.
-- **Versões para o comparativo:** a versão negativa de Essência e Solar e a
-  positiva de Origem trocam apenas a cor de uma tinta por outra cor da própria
-  paleta. Na tela "As três marcas", uma nota informa que são derivadas.
+- **Versão limpa** de cada marca, sem o véu de pixels quase transparentes.
+- **Partes separadas** (símbolo, wordmark, descritor, tagline) por componentes
+  conectados, com a posição exata de cada parte na marca completa. Isso alimenta
+  as animações de construção e de revelação.
+- **Versões para fundo claro e fundo bordô**, trocando apenas a cor de uma tinta
+  por outra cor da própria paleta do conceito.
 
-Coordenadas de recorte, cores de tinta e exclusões ficam no topo do script.
-Para regerar:
+Para trocar uma marca, substitua o PNG em `public/brand/logos/` e rode:
 
 ```bash
-npm run extract-assets
+npm run build-marks
 ```
 
-### Trocar pelos arquivos finais (recomendado)
+Cores das versões e a regra que separa as partes ficam no topo do script.
 
-Os brandboards têm cerca de 1200 px de largura, por isso marcas exibidas em
-tamanho grande ficam levemente suaves. Quando houver os arquivos finais
-(SVG ou PNG em alta), basta substituir o arquivo correspondente em
-`public/brand/crops/<conceito>/` mantendo o nome. Se a proporção mudar,
-atualize `width` e `height` em `data/brandAssets.json`.
+**Remontagens da Origem (tela 20):** a versão horizontal e o selo do brandboard
+foram remontados em alta com as partes oficiais. A horizontal junta símbolo e
+nome; o selo usa texto em arco (Montserrat, a secundária do brandboard) ao redor
+do símbolo.
 
-### Fotografias
+**Guias da construção do símbolo (tela 19):** são linhas SVG medidas sobre o
+símbolo oficial e servem só para a animação. Ao final, a arte oficial ocupa o
+lugar delas. Se o PNG da Origem mudar, as guias precisam ser medidas de novo
+(`components/slides/origem.tsx`).
 
-`public/images/editorial-01.jpg` e as fotos dos capítulos vêm dos próprios
-brandboards e funcionam como provisórias. Para trocar, substitua o arquivo
-mantendo o nome. Direção sugerida: mulheres adultas, beleza natural, luz solar
-quente, contraluz, movimento, textura real.
+## Fotografias e grafismos
+
+As fotos e a linha de Essência vêm dos brandboards, extraídas por
+`scripts/extract-brand-assets.mjs`, e funcionam como provisórias. Para trocar,
+substitua o arquivo em `public/brand/crops/` ou `public/images/` mantendo o
+nome. Direção sugerida: mulheres adultas, beleza natural, luz solar quente,
+contraluz, movimento, textura real.
+
+**Aplicações:** os mockups foram removidos. O comparativo de aplicação entra no
+capítulo 04 quando as fotos estiverem prontas.
 
 ---
 
 ## Tipografia
 
-- **Voz da apresentação (neutra):** Instrument Serif + Instrument Sans, para não
-  competir com nenhum conceito.
-- **Essência:** o "Aa" da tela de tipografia é o recorte original do brandboard.
-  Os exemplos em texto usam **Italiana** (principal) e **Jost Light** (apoio)
-  como referência web aproximada, já que o brandboard não nomeia as fontes.
-  Substitua pelas fontes oficiais quando forem definidas (`app/layout.tsx`).
-- **Origem:** o brandboard indica Playfair Display + Montserrat.
+- **Voz da apresentação:** Open Sans em pesos leves (300 nos títulos, 400 no
+  texto, 500 nos rótulos). É uma única família sem serifa, para não competir
+  com nenhum conceito.
+- **Essência (tela 10):** os exemplos usam **Italiana** (principal) e
+  **Jost Light** (apoio) como referência web aproximada, porque o brandboard
+  não nomeia as fontes. Substitua pelas oficiais quando forem definidas
+  (`app/layout.tsx`).
+- **Origem:** o brandboard indica Playfair Display + Montserrat. Montserrat é
+  usada no texto do selo.
 
 ---
 
@@ -178,9 +191,8 @@ quente, contraluz, movimento, textura real.
 | Próxima / anterior | `↓` `→` `PageDown` `Espaço` / `↑` `←` `PageUp` `Shift+Espaço` |
 | Primeira / última | `Home` / `End` |
 | Ir a um capítulo | menu superior ou **Índice** |
-| Ir a uma tela | **Índice** (todas as 28 telas) |
+| Ir a uma tela | **Índice** (todas as 24 telas) |
 | Link direto | `/#id-da-tela`, por exemplo `/#solar` ou `/#as-tres-marcas` |
-| Lightbox | `←` `→` entre imagens, `Esc` fecha |
 | Mobile | rolagem/swipe vertical natural |
 
 **Modo estático:** acrescente `?static` à URL (por exemplo `/?static#origem`)

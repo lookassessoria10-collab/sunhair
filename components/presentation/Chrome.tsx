@@ -54,7 +54,7 @@ export function Chrome({ override }: { override?: ToneOverride }) {
           className="pointer-events-auto flex items-baseline gap-3 text-(--c-tl) transition-colors duration-700"
           aria-label="Voltar para a capa"
         >
-          <span className="font-display text-xl leading-none tracking-[0.08em]">{brand.name}</span>
+          <span className="wordmark text-[0.95rem] font-normal leading-none">{brand.name}</span>
           <span className="eyebrow hidden opacity-70 sm:inline">{brand.descriptor}</span>
         </button>
 
