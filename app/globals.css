@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/*
+ * Base neutra da apresentação. As cores de cada conceito chegam por
+ * variáveis da tela (--slide-bg, --slide-fg, --slide-accent), definidas em
+ * data/brandPresentation.ts, para nenhum conceito contaminar o outro.
+ */
+@theme {
+  --color-paper: #f5f0e8;
+  --color-ink: #281e1b;
+  --color-night: #2a1717;
+  --color-stone: #bdb2a8;
+
+  --font-display: var(--font-instrument-serif), "Times New Roman", serif;
+  --font-sans: var(--font-instrument-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-essencia: var(--font-italiana), "Didot", serif;
+  --font-essencia-support: var(--font-jost), "Futura", sans-serif;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+  --slide-bg: var(--color-paper);
+  --slide-fg: var(--color-ink);
+  --slide-accent: var(--color-stone);
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-stone) 55%, transparent);
+  color: var(--color-ink);
+}
+
+/* Telas: cada uma ocupa a viewport no desktop e vira um bloco no mobile. */
+.slide,
+.slide-vars {
+  --slide-muted: color-mix(in srgb, var(--slide-fg) 62%, var(--slide-bg));
+  --slide-line: color-mix(in srgb, var(--slide-fg) 16%, transparent);
+  color: var(--slide-fg);
+}
+
+.slide {
+  background: var(--slide-bg);
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  .slide {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Rótulos editoriais pequenos */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.numeral {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Textura de papel extremamente discreta sobre toda a apresentação. */
+.paper-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.33 0 0 0 0 0.28 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Grão leve sobre fotografias */
+.photo-grain::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* Foco visível e discreto para navegação por teclado */
+:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Modo estático (?static): sem rolagem animada */
+html[data-static] {
+  scroll-behavior: auto !important;
+}
+
+/* Navegação fixa: no mobile as barras são sólidas e usam a cor da tela;
+   no desktop cada canto pode ter o próprio tom (telas divididas). */
+.chrome {
+  --c-tl: var(--c-base);
+  --c-tr: var(--c-base);
+  --c-bl: var(--c-base);
+  --c-br: var(--c-base);
+}
+@media (min-width: 1024px) {
+  .chrome {
+    --c-tl: var(--c-tl-lg);
+    --c-tr: var(--c-tr-lg);
+    --c-bl: var(--c-bl-lg);
+    --c-br: var(--c-br-lg);
+  }
+}
