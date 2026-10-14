@@ -80,8 +80,7 @@ export const brand = {
 
 export const meta = {
   title: "SUN Brazilian Hair | Manual de Identidade Visual",
-  description:
-    "Manual de identidade visual da SUN Brazilian Hair, com marca aprovada, sistema visual, aplicações e diretrizes de uso.",
+  description: "Manual de identidade visual da SUN Brazilian Hair, com marca aprovada, sistema visual, aplicações e diretrizes de uso.",
 };
 
 // ---------------------------------------------------------------------------
