@@ -40,7 +40,7 @@ export function ChapterMenu() {
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label="Índice da apresentação"
+          aria-label="Índice do manual"
           className="fixed inset-0 z-[70] overflow-y-auto bg-paper text-ink"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -62,7 +62,7 @@ export function ChapterMenu() {
             </button>
           </div>
 
-          <nav className="grid gap-x-8 gap-y-12 px-5 pb-16 pt-8 sm:grid-cols-2 lg:grid-cols-5 lg:px-10 lg:pt-[8vh]">
+          <nav className="grid gap-x-8 gap-y-12 px-5 pb-16 pt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 lg:px-10 lg:pt-[8vh]">
             {chapters.map((chapter, ci) => (
               <motion.section
                 key={chapter.id}
