@@ -13,6 +13,7 @@ import {
   PaletteSlide,
   PhotographySlide,
   ProtectionSlide,
+  RealisticApplicationSlide,
   TagsApplicationSlide,
   TypographySlide,
   UnboxingApplicationSlide,
@@ -43,6 +44,15 @@ export const slideComponents: Record<string, ComponentType> = {
   tags: TagsApplicationSlide,
   unboxing: UnboxingApplicationSlide,
   digital: DigitalApplicationSlide,
+
+  "aplicacao-landing": RealisticApplicationSlide,
+  "aplicacao-embalagem-real": RealisticApplicationSlide,
+  "aplicacao-balcao": RealisticApplicationSlide,
+  "aplicacao-panfletos": RealisticApplicationSlide,
+  "aplicacao-mostruario": RealisticApplicationSlide,
+  "aplicacao-expositor": RealisticApplicationSlide,
+  "aplicacao-unboxing-real": RealisticApplicationSlide,
+  "aplicacao-kit-profissional": RealisticApplicationSlide,
 
   "uso-correto": CorrectUseSlide,
   "nao-fazer": WrongUseSlide,

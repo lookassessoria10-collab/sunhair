@@ -7,6 +7,7 @@ import { Eyebrow, Lines, SafeArea } from "@/components/ui/Layout";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { MaskReveal, Reveal } from "@/components/ui/Reveal";
 import { EASE, VIEWPORT } from "@/components/ui/motion";
+import { useSlide } from "@/components/presentation/Slide";
 import { manual } from "@/data/brandPresentation";
 
 const ivory = "#F8F3EC";
@@ -509,6 +510,42 @@ export function DigitalApplicationSlide() {
         <Image src={manual.imagery.editorial.src} alt="Editorial SUN" fill sizes="48vw" className="object-cover opacity-45" />
         <div className="absolute inset-0 bg-[#4F1720]/35" />
         <PhoneMockup />
+      </div>
+    </div>
+  );
+}
+
+export function RealisticApplicationSlide() {
+  const { id } = useSlide();
+  const item = manual.realisticApplications[id as keyof typeof manual.realisticApplications];
+  if (!item) return null;
+  const contain = item.fit === "contain";
+
+  return (
+    <div className="grid min-h-svh lg:h-full lg:min-h-0 lg:grid-cols-[34%_66%]">
+      <SafeArea className="justify-center">
+        <Heading eyebrow={item.eyebrow} title={item.title} text={item.text} />
+        <Reveal delay={0.4}>
+          <p className="eyebrow mt-10 text-(--slide-muted)">Simulação de aplicação</p>
+        </Reveal>
+      </SafeArea>
+      <div className="relative min-h-[62svh] overflow-hidden bg-[#EDE2D6] lg:h-full">
+        <motion.div
+          className="absolute inset-0"
+          initial={{ opacity: 0, scale: 1.025 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={VIEWPORT}
+          transition={{ duration: 1.4, ease: EASE }}
+        >
+          <Image
+            src={item.src}
+            alt={item.alt}
+            fill
+            sizes="(min-width: 1024px) 66vw, 100vw"
+            className={contain ? "object-contain p-6 lg:p-[3vw]" : "object-cover"}
+            style={{ objectPosition: item.position }}
+          />
+        </motion.div>
       </div>
     </div>
   );
