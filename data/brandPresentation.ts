@@ -17,7 +17,7 @@ import { asset, mark, markPart, type Asset } from "./assets";
 
 export type Tone = "light" | "dark";
 export type ConceptId = "essencia" | "solar" | "origem";
-export type ChapterId = "introducao" | ConceptId | "comparativo";
+export type ChapterId = "inicio" | "marca" | "identidade" | "sistema" | "aplicacoes" | "diretrizes" | "introducao" | ConceptId | "comparativo";
 
 export type Theme = {
   /** Fundo da tela */
@@ -75,13 +75,13 @@ export const brand = {
   name: "SUN",
   descriptor: "Brazilian Hair",
   tagline: "Cabelo brasileiro. Sem exceção.",
-  presentationLabel: "Apresentação de Identidade Visual",
+  presentationLabel: "Manual de Identidade Visual",
 };
 
 export const meta = {
-  title: "SUN Brazilian Hair | Apresentação de Identidade Visual",
+  title: "SUN Brazilian Hair | Manual de Identidade Visual",
   description:
-    "Três caminhos criativos para a identidade visual da SUN Brazilian Hair — Essência, Solar e Origem.",
+    "Manual de identidade visual da SUN Brazilian Hair, com marca aprovada, sistema visual, aplicações e diretrizes de uso.",
 };
 
 // ---------------------------------------------------------------------------
@@ -89,11 +89,12 @@ export const meta = {
 // ---------------------------------------------------------------------------
 
 export const chapters: { id: ChapterId; number: string; label: string }[] = [
-  { id: "introducao", number: "00", label: "Introdução" },
-  { id: "essencia", number: "01", label: "Essência" },
-  { id: "solar", number: "02", label: "Solar" },
-  { id: "origem", number: "03", label: "Origem" },
-  { id: "comparativo", number: "04", label: "Comparativo" },
+  { id: "inicio", number: "00", label: "Início" },
+  { id: "marca", number: "01", label: "Marca" },
+  { id: "identidade", number: "02", label: "Identidade" },
+  { id: "sistema", number: "03", label: "Sistema visual" },
+  { id: "aplicacoes", number: "04", label: "Aplicações" },
+  { id: "diretrizes", number: "05", label: "Diretrizes" },
 ];
 
 type Chrome = Partial<Record<"tl" | "tr" | "bl" | "br", Tone>>;
@@ -112,34 +113,31 @@ export type SlideDef = {
 };
 
 export const slides: SlideDef[] = [
-  { id: "inicio", chapter: "introducao", label: "Capa", theme: themes.paper },
-  { id: "a-marca", chapter: "introducao", label: "A marca", theme: themes.paper },
-  { id: "posicionamento", chapter: "introducao", label: "Posicionamento", theme: themes.night },
-  { id: "o-desafio", chapter: "introducao", label: "O desafio", theme: themes.paper },
-  { id: "caminhos", chapter: "introducao", label: "Escolha um caminho", theme: themes.paper },
+  { id: "inicio", chapter: "inicio", label: "Capa", theme: themes.paper },
+  { id: "a-marca", chapter: "marca", label: "A marca", theme: themes.paper },
+  { id: "posicionamento", chapter: "marca", label: "Posicionamento", theme: themes.night },
 
-  { id: "essencia", chapter: "essencia", label: "Abertura", theme: themes.essencia },
-  { id: "essencia-defesa", chapter: "essencia", label: "Defesa do conceito", theme: themes.essencia },
-  { id: "essencia-construcao", chapter: "essencia", label: "Construção", theme: themes.essencia },
-  { id: "essencia-cores", chapter: "essencia", label: "Cores", theme: themes.essencia },
-  { id: "essencia-tipografia", chapter: "essencia", label: "Tipografia", theme: themes.essencia },
-  { id: "essencia-linguagem", chapter: "essencia", label: "Linguagem gráfica", theme: themes.essencia },
+  { id: "marca-aprovada", chapter: "identidade", label: "Marca aprovada", theme: themes.essencia, chrome: { tr: "dark", br: "dark" } },
+  { id: "conceito", chapter: "identidade", label: "Conceito", theme: themes.paper },
+  { id: "arquitetura", chapter: "identidade", label: "Arquitetura da assinatura", theme: themes.essencia },
+  { id: "variacoes", chapter: "identidade", label: "Variações cromáticas", theme: themes.paper },
+  { id: "protecao", chapter: "identidade", label: "Área de proteção", theme: themes.essencia },
 
-  { id: "solar", chapter: "solar", label: "Abertura", theme: themes.solarBordo },
-  { id: "solar-defesa", chapter: "solar", label: "Defesa do conceito", theme: themes.solarIvory },
-  { id: "solar-simbolo", chapter: "solar", label: "O símbolo", theme: themes.solarIvory },
-  { id: "solar-contraste", chapter: "solar", label: "Bordô + dourado", theme: themes.solarIvory, chrome: { tl: "dark", bl: "dark" } },
-  { id: "solar-sistema", chapter: "solar", label: "Sistema visual", theme: themes.solarIvory },
+  { id: "paleta", chapter: "sistema", label: "Paleta oficial", theme: themes.paper },
+  { id: "tipografia", chapter: "sistema", label: "Tipografia", theme: themes.essencia },
+  { id: "sistema-grafico", chapter: "sistema", label: "Sistema gráfico", theme: themes.paper },
+  { id: "fotografia", chapter: "sistema", label: "Direção fotográfica", theme: themes.essencia },
+  { id: "voz", chapter: "sistema", label: "Tom de voz", theme: themes.origemBordo },
 
-  { id: "origem", chapter: "origem", label: "Abertura", theme: themes.origemBordo },
-  { id: "origem-defesa", chapter: "origem", label: "Defesa do conceito", theme: themes.origemBordo },
-  { id: "origem-construcao", chapter: "origem", label: "Construção do símbolo", theme: themes.origemBordo },
-  { id: "origem-marcas", chapter: "origem", label: "Símbolo + wordmark", theme: themes.origemBordo, chrome: { bl: "light", br: "light" } },
-  { id: "origem-sistema", chapter: "origem", label: "Paleta e sistema", theme: themes.origemIvory },
+  { id: "cartao", chapter: "aplicacoes", label: "Cartão de visita", theme: themes.paper },
+  { id: "caixa", chapter: "aplicacoes", label: "Caixa do produto", theme: themes.essencia },
+  { id: "tags", chapter: "aplicacoes", label: "Tags de produto", theme: themes.paper },
+  { id: "unboxing", chapter: "aplicacoes", label: "Unboxing", theme: themes.essencia },
+  { id: "digital", chapter: "aplicacoes", label: "Aplicação digital", theme: themes.paper, chrome: { tr: "dark", br: "dark" } },
 
-  { id: "comparativo", chapter: "comparativo", label: "Três caminhos", theme: themes.paper },
-  { id: "as-tres-marcas", chapter: "comparativo", label: "As três marcas", theme: themes.paper },
-  { id: "encerramento", chapter: "comparativo", label: "Encerramento", theme: themes.closing },
+  { id: "uso-correto", chapter: "diretrizes", label: "Uso correto", theme: themes.paper },
+  { id: "nao-fazer", chapter: "diretrizes", label: "Usos incorretos", theme: themes.essencia },
+  { id: "encerramento", chapter: "diretrizes", label: "Encerramento", theme: themes.origemBordo },
 ];
 
 // ---------------------------------------------------------------------------
@@ -412,6 +410,129 @@ export const concepts = {
 };
 
 export const conceptOrder: ConceptId[] = ["essencia", "solar", "origem"];
+
+// ---------------------------------------------------------------------------
+// Manual da marca aprovada
+// ---------------------------------------------------------------------------
+
+export const manual = {
+  logo: {
+    primary: mark("essencia/light"),
+    negative: mark("essencia/dark"),
+    sun: markPart("essencia/light-sun"),
+    name: markPart("essencia/light-name"),
+    tagline: markPart("essencia/light-tagline"),
+  },
+  imagery: {
+    hero: asset("essencia/photo-hero"),
+    detail: asset("essencia/photo-01"),
+    editorial: asset("images/editorial-01"),
+    lines: asset("essencia/lines"),
+  },
+  approved: {
+    eyebrow: "Marca aprovada",
+    statement: "A identidade que seguirá para implementação.",
+  },
+  concept: {
+    eyebrow: "Conceito",
+    title: ["O movimento", "encontra a luz."],
+    text: "A assinatura une dois gestos sutis: o arco superior sugere luz e presença; o traço inferior acompanha a fluidez natural dos fios.",
+    ideas: [
+      { title: "Luz", text: "presença" },
+      { title: "Movimento", text: "naturalidade" },
+      { title: "Respiro", text: "sofisticação" },
+    ],
+  },
+  architecture: {
+    eyebrow: "Arquitetura",
+    title: ["Três níveis.", "Uma leitura única."],
+    text: "A ordem SUN, Brazilian Hair e Cabelo brasileiro. Sem exceção. deve permanecer estável.",
+    levels: ["Nome", "Descriptor", "Assinatura verbal"],
+  },
+  versions: {
+    eyebrow: "Versões",
+    title: ["A mesma marca", "em quatro situações."],
+    text: "O desenho não muda. Apenas a cor se adapta ao suporte.",
+    items: ["Principal", "Negativa", "Monocromática bordô", "Monocromática dourada"],
+  },
+  protection: {
+    eyebrow: "Área de proteção",
+    title: ["Espaço também", "faz parte da marca."],
+    text: "Use como margem mínima a altura do descriptor Brazilian Hair ao redor de toda a assinatura.",
+    sizes: [
+      { value: "42 mm", label: "impressos com tagline" },
+      { value: "220 px", label: "digital com tagline" },
+      { value: "150 px", label: "assinatura reduzida" },
+    ],
+  },
+  palette: {
+    eyebrow: "Paleta oficial",
+    title: ["Pele, papel,", "vinho e luz."],
+    text: "A paleta alterna respiro editorial e profundidade.",
+    swatches: [
+      { name: "Marfim", hex: "#F8F3EC", role: "Base principal" },
+      { name: "Areia", hex: "#D9C6B4", role: "Materiais" },
+      { name: "Argila", hex: "#B89B86", role: "Apoio" },
+      { name: "Bordô", hex: "#6B2E2E", role: "Institucional" },
+      { name: "Espresso", hex: "#3E2825", role: "Texto e marca" },
+      { name: "Ouro suave", hex: "#D4B483", role: "Detalhes" },
+    ] satisfies Swatch[],
+  },
+  typography: {
+    eyebrow: "Tipografia",
+    title: "Lettering proprietário + duas famílias de apoio.",
+    primary: { name: "Italiana", role: "Títulos editoriais e campanhas" },
+    secondary: { name: "Jost", role: "Textos, informações e digital" },
+    note: "A marca SUN não deve ser recomposta digitando uma fonte. O logotipo é uma assinatura própria e deve sempre ser usado a partir do arquivo oficial.",
+  },
+  graphic: {
+    eyebrow: "Sistema gráfico",
+    title: ["O arco enquadra.", "O fio conduz."],
+    text: "Os gestos da marca podem aparecer isolados como elementos de apoio, sempre com pouco peso visual.",
+    rules: ["usar como moldura parcial", "dar preferência a linhas finas", "evitar círculos fechados ou ornamentos pesados"],
+  },
+  photography: {
+    eyebrow: "Direção fotográfica",
+    title: ["Luz quente.", "Textura real. Movimento."],
+    text: "A fotografia precisa fazer o cabelo parecer vivo, não plástico.",
+    tags: ["Contraluz", "Closes", "Movimento", "Pele real", "Tons quentes"],
+  },
+  voice: {
+    eyebrow: "Tom de voz",
+    title: ["Falar pouco.", "Dizer exatamente."],
+    text: "A SUN pode ser sensorial sem exagerar. O texto deve valorizar origem, escolha, movimento e acabamento com frases curtas e específicas.",
+    examples: [
+      "Cabelo brasileiro. Sem exceção.",
+      "Movimento que acompanha você.",
+      "Origem que se vê nos fios.",
+      "Comprimento, volume e naturalidade em equilíbrio.",
+    ],
+  },
+  applications: {
+    card: { eyebrow: "Papelaria", title: "Cartão de visita", text: "Marfim como base, bordô como contraponto e ouro apenas nos gestos da marca." },
+    box: { eyebrow: "Embalagem", title: ["A caixa", "como objeto de marca."], text: "No fundo bordô, a assinatura pode aparecer na versão negativa. A leitura precisa ser imediata e o acabamento pode vir do material, não de efeitos digitais." },
+    tags: { eyebrow: "Produto", title: "Tags e identificação", text: "A frente preserva a assinatura. Informações técnicas como cor, peso, comprimento e lote entram no verso com tipografia de apoio." },
+    unboxing: { eyebrow: "Experiência", title: ["Unboxing também", "é identidade."], text: "Sacola, papel de seda, selo e cartão repetem a mesma lógica: bordô em áreas maiores, marfim para respiro e ouro em pequenas assinaturas." },
+    digital: { eyebrow: "Digital", title: ["A marca também", "precisa respirar", "na tela."], text: "Fotografia quente, tipografia limpa e o arco usado como assinatura. Poucos elementos por tela preservam a percepção premium." },
+  },
+  guidelines: {
+    correct: {
+      eyebrow: "Uso correto",
+      title: "Consistência antes de variedade.",
+      text: "A marca não precisa mudar para se adaptar. O sistema já oferece versões suficientes.",
+      rules: ["Fundo claro + marca principal", "Fundo bordô + versão negativa"],
+    },
+    wrong: {
+      eyebrow: "Não fazer",
+      title: "A personalidade está no desenho.",
+      text: "Distorcer, adicionar efeitos ou competir com o arco reduz a força da assinatura.",
+      items: ["Não distorcer", "Não girar", "Sem sombra", "Sem novas cores"],
+    },
+  },
+  closing: {
+    label: "Manual de Identidade Visual",
+  },
+};
 
 // ---------------------------------------------------------------------------
 // Capítulo 04 — Comparativo e encerramento
