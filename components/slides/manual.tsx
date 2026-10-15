@@ -455,7 +455,7 @@ export function TagsApplicationSlide() {
 
 function BagMockup() {
   return (
-    <div className="relative mx-auto h-[620px] w-full max-w-[720px]">
+    <div className="relative mx-auto h-[460px] w-full max-w-[720px] sm:h-[560px] lg:h-[620px]">
       <div className="absolute inset-x-[12%] bottom-[6%] h-[72%] bg-[#4F1720] shadow-[0_40px_80px_rgba(62,40,37,0.28)]">
         <div className="absolute -top-[20%] left-[31%] h-[28%] w-[38%] rounded-t-[50%] border-[3px] border-b-0 border-[#D4B483]" />
         <div className="absolute inset-0 flex items-center justify-center p-[15%]">
@@ -482,7 +482,7 @@ export function UnboxingApplicationSlide() {
 
 function PhoneMockup() {
   return (
-    <div className="relative mx-auto h-[700px] w-[345px] rounded-[3rem] bg-[#151312] p-[10px] shadow-2xl">
+    <div className="relative mx-auto h-[540px] w-[270px] rounded-[2.4rem] bg-[#151312] p-[8px] shadow-2xl sm:h-[620px] sm:w-[305px] sm:rounded-[2.7rem] lg:h-[700px] lg:w-[345px] lg:rounded-[3rem] lg:p-[10px]">
       <div className="relative h-full overflow-hidden rounded-[2.45rem]">
         <Image src={manual.imagery.hero.src} alt="Aplicação mobile SUN Brazilian Hair" fill sizes="345px" className="object-cover" />
         <div className="absolute inset-0 bg-[#4F1720]/45" />
@@ -506,7 +506,7 @@ export function DigitalApplicationSlide() {
       <SafeArea className="justify-center">
         <Heading eyebrow={c.eyebrow} title={c.title} text={c.text} />
       </SafeArea>
-      <div className="relative flex min-h-[820px] items-center justify-center overflow-hidden bg-[#6B2E2E] lg:min-h-0">
+      <div className="relative flex min-h-[620px] items-center justify-center overflow-hidden bg-[#6B2E2E] sm:min-h-[720px] lg:min-h-0">
         <Image src={manual.imagery.editorial.src} alt="Editorial SUN" fill sizes="48vw" className="object-cover opacity-45" />
         <div className="absolute inset-0 bg-[#4F1720]/35" />
         <PhoneMockup />
@@ -522,27 +522,28 @@ export function RealisticApplicationSlide() {
   const contain = item.fit === "contain";
 
   return (
-    <div className="grid min-h-svh lg:h-full lg:min-h-0 lg:grid-cols-[34%_66%]">
-      <SafeArea className="justify-center">
+    <div className="grid min-h-svh lg:h-full lg:min-h-0 lg:grid-cols-[40%_60%]">
+      <SafeArea className="justify-center pb-10 pt-24 sm:pb-12 sm:pt-28 lg:pb-[13vh] lg:pt-[15vh] [&_h2]:text-[clamp(2.15rem,3.45vw,4.65rem)]">
         <Heading eyebrow={item.eyebrow} title={item.title} text={item.text} />
         <Reveal delay={0.4}>
-          <p className="eyebrow mt-10 text-(--slide-muted)">Simulação de aplicação</p>
+          <p className="eyebrow mt-7 text-(--slide-muted) sm:mt-9">Simulação de aplicação</p>
         </Reveal>
       </SafeArea>
-      <div className="relative min-h-[62svh] overflow-hidden bg-[#EDE2D6] lg:h-full">
+      <div className="relative mx-4 mb-20 aspect-[4/3] overflow-hidden bg-[#EDE2D6] sm:mx-8 sm:mb-24 lg:m-0 lg:h-full lg:aspect-auto">
         <motion.div
           className="absolute inset-0"
-          initial={{ opacity: 0, scale: 1.025 }}
+          initial={{ opacity: 0, scale: 1.012 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={VIEWPORT}
-          transition={{ duration: 1.4, ease: EASE }}
+          transition={{ duration: 1.15, ease: EASE }}
         >
           <Image
             src={item.src}
             alt={item.alt}
             fill
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            className={contain ? "object-contain p-6 lg:p-[3vw]" : "object-cover"}
+            unoptimized
+            sizes="(min-width: 1024px) 60vw, 100vw"
+            className={contain ? "object-contain p-3 sm:p-6 lg:p-[2.2vw]" : "object-contain lg:object-cover"}
             style={{ objectPosition: item.position }}
           />
         </motion.div>
