@@ -66,11 +66,12 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
+/*
+ * Sem scroll-behavior: smooth no html. A rolagem suave é pedida em goTo()
+ * (Presentation.tsx); no html ela também animava a rolagem nativa até a
+ * âncora de um link direto (/#id), que somava com o posicionamento inicial
+ * e fazia a página parar na tela errada.
+ */
 
 /*
  * Títulos: Open Sans leve, entrelinha curta e espaçamento levemente fechado.
@@ -139,11 +140,6 @@ body {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* Modo estático (?static): sem rolagem animada */
-html[data-static] {
-  scroll-behavior: auto !important;
 }
 
 /* Navegação fixa: no mobile as barras são sólidas e usam a cor da tela;

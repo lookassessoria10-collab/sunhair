@@ -14,10 +14,7 @@ const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(mi
 // Modo estático (?static): todas as animações terminam instantaneamente.
 // Útil para capturas de tela, impressão e revisão rápida do conteúdo.
 const STATIC_MODE = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("static");
-if (STATIC_MODE) {
-  MotionGlobalConfig.skipAnimations = true;
-  document.documentElement.dataset.static = "";
-}
+if (STATIC_MODE) MotionGlobalConfig.skipAnimations = true;
 
 export function Presentation() {
   const total = slides.length;
