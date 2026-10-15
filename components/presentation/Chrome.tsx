@@ -51,7 +51,7 @@ export function Chrome({ override }: { override?: ToneOverride }) {
         <button
           type="button"
           onClick={() => goTo(0)}
-          className="pointer-events-auto flex items-baseline gap-3 text-(--c-tl) transition-colors duration-700"
+          className="pointer-events-auto flex items-baseline gap-3 whitespace-nowrap text-(--c-tl) transition-colors duration-700"
           aria-label="Voltar para a capa"
         >
           <span className="wordmark text-[0.95rem] font-normal leading-none">{brand.name}</span>
@@ -59,7 +59,8 @@ export function Chrome({ override }: { override?: ToneOverride }) {
         </button>
 
         <nav aria-label="Capítulos" className="pointer-events-auto flex items-center gap-8 text-(--c-tr) transition-colors duration-700">
-          <ol className="hidden items-center gap-7 lg:flex">
+          {/* Lista de capítulos só cabe ao lado da marca a partir de 1280 px; abaixo disso, o Índice. */}
+          <ol className="hidden items-center gap-7 xl:flex">
             {chapters.map((c, i) => {
               const isCurrent = i === chapterIndex;
               const firstSlide = slides.find((s) => s.chapter === c.id);

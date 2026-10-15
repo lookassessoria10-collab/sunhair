@@ -50,7 +50,7 @@ export function ChapterMenu() {
           <div className="flex h-16 items-center justify-between px-5 lg:h-20 lg:px-10">
             <p className="flex items-baseline gap-3">
               <span className="wordmark text-[0.95rem] font-normal">{brand.name}</span>
-              <span className="eyebrow opacity-60">{brand.presentationLabel}</span>
+              <span className="eyebrow hidden opacity-60 sm:inline">{brand.presentationLabel}</span>
             </p>
             <button
               ref={closeRef}

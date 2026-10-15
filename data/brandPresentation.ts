@@ -42,6 +42,17 @@ export type GalleryItem = {
   image: Asset;
 };
 
+export type ApplicationMockup = {
+  eyebrow: string;
+  title: string[];
+  text: string;
+  /** Mockup final aprovado em /public/simulations, na resolução original e sem perdas. */
+  image: Asset;
+  alt: string;
+  /** Alinhamento do mockup dentro da área da imagem no desktop (object-position). */
+  position: string;
+};
+
 // ---------------------------------------------------------------------------
 // Base neutra da apresentação (não pertence a nenhum conceito)
 // ---------------------------------------------------------------------------
@@ -128,19 +139,14 @@ export const slides: SlideDef[] = [
   { id: "fotografia", chapter: "sistema", label: "Direção fotográfica", theme: themes.essencia },
   { id: "voz", chapter: "sistema", label: "Tom de voz", theme: themes.origemBordo },
 
-  { id: "cartao", chapter: "aplicacoes", label: "Cartão de visita", theme: themes.paper },
-  { id: "caixa", chapter: "aplicacoes", label: "Caixa do produto", theme: themes.essencia },
-  { id: "tags", chapter: "aplicacoes", label: "Tags de produto", theme: themes.paper },
-  { id: "unboxing", chapter: "aplicacoes", label: "Unboxing", theme: themes.essencia },
-  { id: "digital", chapter: "aplicacoes", label: "Aplicação digital", theme: themes.paper, chrome: { tr: "dark", br: "dark" } },
-
-  { id: "aplicacao-landing", chapter: "aplicacoes", label: "Landing page", theme: themes.paper },
-  { id: "aplicacao-embalagem-real", chapter: "aplicacoes", label: "Embalagem realista", theme: themes.essencia },
-  { id: "aplicacao-balcao", chapter: "aplicacoes", label: "Balcão e showroom", theme: themes.paper },
-  { id: "aplicacao-panfletos", chapter: "aplicacoes", label: "Panfletos", theme: themes.essencia },
+  { id: "aplicacao-landing", chapter: "aplicacoes", label: "Landing page", theme: themes.essencia },
+  { id: "aplicacao-embalagem-real", chapter: "aplicacoes", label: "Embalagem", theme: themes.paper },
+  { id: "aplicacao-balcao", chapter: "aplicacoes", label: "Balcão e showroom", theme: themes.essencia },
+  { id: "aplicacao-panfletos", chapter: "aplicacoes", label: "Panfletos", theme: themes.paper },
+  { id: "aplicacao-cartoes", chapter: "aplicacoes", label: "Cartões", theme: themes.essencia },
   { id: "aplicacao-mostruario", chapter: "aplicacoes", label: "Mostruário de cores", theme: themes.paper },
   { id: "aplicacao-expositor", chapter: "aplicacoes", label: "Expositor de salão", theme: themes.essencia },
-  { id: "aplicacao-unboxing-real", chapter: "aplicacoes", label: "Unboxing realista", theme: themes.paper },
+  { id: "aplicacao-unboxing-real", chapter: "aplicacoes", label: "Unboxing", theme: themes.paper },
   { id: "aplicacao-kit-profissional", chapter: "aplicacoes", label: "Kit profissional", theme: themes.essencia },
 
   { id: "uso-correto", chapter: "diretrizes", label: "Uso correto", theme: themes.paper },
@@ -516,87 +522,84 @@ export const manual = {
       "Comprimento, volume e naturalidade em equilíbrio.",
     ],
   },
+  /**
+   * Aplicações: mockups finais aprovados (imagens em /public/simulations).
+   * A chave é o id da tela; a ordem segue a lista `slides`.
+   */
   applications: {
-    card: { eyebrow: "Papelaria", title: "Cartão de visita", text: "Marfim como base, bordô como contraponto e ouro apenas nos gestos da marca." },
-    box: { eyebrow: "Embalagem", title: ["A caixa", "como objeto de marca."], text: "No fundo bordô, a assinatura pode aparecer na versão negativa. A leitura precisa ser imediata e o acabamento pode vir do material, não de efeitos digitais." },
-    tags: { eyebrow: "Produto", title: "Tags e identificação", text: "A frente preserva a assinatura. Informações técnicas como cor, peso, comprimento e lote entram no verso com tipografia de apoio." },
-    unboxing: { eyebrow: "Experiência", title: ["Unboxing também", "é identidade."], text: "Sacola, papel de seda, selo e cartão repetem a mesma lógica: bordô em áreas maiores, marfim para respiro e ouro em pequenas assinaturas." },
-    digital: { eyebrow: "Digital", title: ["A marca também", "precisa respirar", "na tela."], text: "Fotografia quente, tipografia limpa e o arco usado como assinatura. Poucos elementos por tela preservam a percepção premium." },
-  },
-  realisticApplications: {
     "aplicacao-landing": {
       eyebrow: "Experiência digital",
       title: ["Landing page", "como extensão da marca."],
       text: "Fotografia quente, hierarquia simples e produto em primeiro plano levam a identidade para o ambiente digital sem transformar a marca em um template de e-commerce.",
-      src: "/simulations/landing-page.webp",
-      alt: "Landing page da SUN Brazilian Hair aplicada em notebook",
-      fit: "cover",
+      image: { src: "/simulations/landing-page-notebook.webp", width: 1536, height: 1024 },
+      alt: "Landing page da SUN Brazilian Hair aberta em um notebook",
       position: "50% 50%",
     },
     "aplicacao-embalagem-real": {
       eyebrow: "Produto",
       title: ["A experiência", "começa na caixa."],
       text: "Bordô, marfim e ouro organizam uma abertura que apresenta o cabelo como peça principal. Materiais e acabamento carregam a percepção de qualidade.",
-      src: "/simulations/embalagem-aberta.webp",
-      alt: "Caixa aberta da SUN Brazilian Hair com extensão de cabelo",
-      fit: "cover",
+      image: { src: "/simulations/embalagem-caixa.webp", width: 1536, height: 1024 },
+      alt: "Caixa bordô da SUN Brazilian Hair com extensão de cabelo, tag e papel de seda",
       position: "50% 50%",
     },
     "aplicacao-balcao": {
       eyebrow: "Ponto de venda",
       title: ["A marca", "ocupa o espaço."],
       text: "No showroom, a identidade precisa orientar sem competir com as mechas. O bordô concentra a assinatura enquanto madeira, pedra e luz quente criam o entorno.",
-      src: "/simulations/showroom-balcao.webp",
-      alt: "Balcão e showroom da SUN Brazilian Hair",
-      fit: "cover",
+      image: { src: "/simulations/balcao-recepcao.webp", width: 1536, height: 1024 },
+      alt: "Balcão de recepção bordô e parede com a marca SUN Brazilian Hair em showroom",
       position: "50% 50%",
     },
     "aplicacao-panfletos": {
       eyebrow: "Materiais impressos",
       title: ["Informação", "com linguagem editorial."],
       text: "Panfletos e materiais de apoio combinam fotografia de textura, blocos claros e detalhes finos para explicar produto, origem e diferenciais.",
-      src: "/simulations/panfletos.webp",
-      alt: "Panfletos da SUN Brazilian Hair em composição editorial",
-      fit: "contain",
+      image: { src: "/simulations/panfletos-editoriais.webp", width: 1312, height: 1199 },
+      alt: "Dois panfletos da SUN Brazilian Hair, um bordô e um marfim, sobre pedra clara",
+      position: "50% 50%",
+    },
+    "aplicacao-cartoes": {
+      eyebrow: "Papelaria",
+      title: ["Cartões", "frente e verso."],
+      text: "Marfim como base, bordô como contraponto e ouro apenas nos gestos da marca.",
+      image: { src: "/simulations/cartoes-frente-verso.webp", width: 1145, height: 1374 },
+      alt: "Cartões da SUN Brazilian Hair em bordô e marfim com fotografia de cabelo",
       position: "50% 50%",
     },
     "aplicacao-mostruario": {
       eyebrow: "Escolha de cor",
       title: ["Cor também", "é experiência."],
       text: "O mostruário transforma uma etapa técnica da venda em ponto de contato com a marca, ajudando cliente e profissional a comparar tonalidades com organização.",
-      src: "/simulations/mostruario-cores.webp",
-      alt: "Mostruário de cores de cabelo da SUN Brazilian Hair",
-      fit: "cover",
+      image: { src: "/simulations/mostruario-cores-argola.webp", width: 1536, height: 1024 },
+      alt: "Mostruário de cores da SUN Brazilian Hair com mechas numeradas em argola dourada",
       position: "50% 50%",
     },
     "aplicacao-expositor": {
       eyebrow: "Salão parceiro",
       title: ["Produto visível.", "Sistema organizado."],
       text: "O expositor permite comparar tonalidades e comprimentos mantendo a presença da SUN no ambiente profissional sem sobrecarregar a parede.",
-      src: "/simulations/expositor-salao.webp",
-      alt: "Expositor de extensões SUN Brazilian Hair em salão",
-      fit: "contain",
+      image: { src: "/simulations/expositor-parede.webp", width: 1374, height: 1145 },
+      alt: "Expositor de parede da SUN Brazilian Hair com seis tonalidades de extensões",
       position: "50% 50%",
     },
     "aplicacao-unboxing-real": {
       eyebrow: "E-commerce",
       title: ["Receber o produto", "também é marca."],
       text: "Caixa, seda, tag e cartão trabalham juntos para que a entrega preserve a mesma percepção da experiência presencial.",
-      src: "/simulations/unboxing.webp",
-      alt: "Kit de unboxing da SUN Brazilian Hair",
-      fit: "contain",
+      image: { src: "/simulations/unboxing-caixa-aberta.webp", width: 1199, height: 1312 },
+      alt: "Caixa aberta da SUN Brazilian Hair com saquinho de cetim, cartão, tag e extensão",
       position: "50% 50%",
     },
     "aplicacao-kit-profissional": {
       eyebrow: "Relacionamento profissional",
       title: ["Uma ferramenta", "para quem aplica."],
       text: "O kit reúne amostras, informações, cuidados e materiais de apoio para extensionistas e salões, reforçando padronização e confiança na indicação.",
-      src: "/simulations/kit-profissional.webp",
-      alt: "Kit profissional da SUN Brazilian Hair com amostras e materiais",
-      fit: "cover",
+      image: { src: "/simulations/kit-profissional-amostras.webp", width: 1536, height: 1024 },
+      alt: "Kit profissional da SUN Brazilian Hair com cartela de cores, caixa, panfleto e tags",
       position: "50% 50%",
     },
-  },
+  } satisfies Record<string, ApplicationMockup>,
   guidelines: {
     correct: {
       eyebrow: "Uso correto",

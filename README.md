@@ -165,8 +165,12 @@ substitua o arquivo em `public/brand/crops/` ou `public/images/` mantendo o
 nome. Direção sugerida: mulheres adultas, beleza natural, luz solar quente,
 contraluz, movimento, textura real.
 
-**Aplicações:** os mockups foram removidos. O comparativo de aplicação entra no
-capítulo 04 quando as fotos estiverem prontas.
+**Aplicações (capítulo 04):** as 9 telas usam os mockups finais aprovados,
+em `public/simulations/`, na resolução original e sem perdas (WebP lossless
+gerado a partir dos PNGs originais). Texto, imagem, alt e alinhamento de cada
+tela ficam em `manual.applications` (`data/brandPresentation.ts`). Para trocar
+um mockup, substitua o arquivo e atualize largura e altura ali; não recrie
+mockups em HTML/CSS.
 
 ---
 
@@ -191,7 +195,7 @@ capítulo 04 quando as fotos estiverem prontas.
 | Próxima / anterior | `↓` `→` `PageDown` `Espaço` / `↑` `←` `PageUp` `Shift+Espaço` |
 | Primeira / última | `Home` / `End` |
 | Ir a um capítulo | menu superior ou **Índice** |
-| Ir a uma tela | **Índice** (todas as 24 telas) |
+| Ir a uma tela | **Índice** (todas as 25 telas) |
 | Link direto | `/#id-da-tela`, por exemplo `/#solar` ou `/#as-tres-marcas` |
 | Mobile | rolagem/swipe vertical natural |
 
