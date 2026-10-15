@@ -2,12 +2,11 @@
 
 import { MotionConfig, MotionGlobalConfig, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { slides, type GalleryItem } from "@/data/brandPresentation";
+import { slides } from "@/data/brandPresentation";
 import { slideComponents } from "@/components/slides/registry";
-import { Lightbox } from "@/components/ui/Lightbox";
 import { ChapterMenu } from "./ChapterMenu";
 import { Chrome } from "./Chrome";
-import { PresentationContext, type LightboxState, type PresentationApi, type ToneOverride } from "./PresentationContext";
+import { PresentationContext, type PresentationApi } from "./PresentationContext";
 import { Slide } from "./Slide";
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
@@ -26,8 +25,6 @@ export function Presentation() {
 
   const [active, setActive] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [lightbox, setLightbox] = useState<LightboxState>(null);
-  const [toneOverrides, setToneOverrides] = useState<Record<string, ToneOverride>>({});
 
   const activeRef = useRef(0);
   // Destino de uma navegação em andamento: permite apertar "próximo"
@@ -96,7 +93,7 @@ export function Presentation() {
   // Teclado: setas, PageUp/PageDown, espaço, Home e End.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (menuOpen || lightbox) return;
+      if (menuOpen) return;
       if (e.altKey || e.ctrlKey || e.metaKey) return;
       const target = e.target as HTMLElement | null;
       if (target?.closest("input, textarea, select, [contenteditable='true'], [data-local-keys]")) return;
@@ -133,32 +130,15 @@ export function Presentation() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [menuOpen, lightbox, next, prev, goTo, total]);
+  }, [menuOpen, next, prev, goTo, total]);
 
-  // Sobreposições travam a rolagem da página.
+  // O índice aberto trava a rolagem da página.
   useEffect(() => {
-    const locked = menuOpen || Boolean(lightbox);
-    document.documentElement.style.overflow = locked ? "hidden" : "";
+    document.documentElement.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.documentElement.style.overflow = "";
     };
-  }, [menuOpen, lightbox]);
-
-  const openLightbox = useCallback((items: GalleryItem[], index = 0) => setLightbox({ items, index }), []);
-  const closeLightbox = useCallback(() => setLightbox(null), []);
-  const setToneOverride = useCallback((slideId: string, override: ToneOverride | null) => {
-    setToneOverrides((current) => {
-      if (override === null) {
-        if (!(slideId in current)) return current;
-        const rest = { ...current };
-        delete rest[slideId];
-        return rest;
-      }
-      const prev = current[slideId];
-      if (prev && prev.tone === override.tone && prev.bg === override.bg) return current;
-      return { ...current, [slideId]: override };
-    });
-  }, []);
+  }, [menuOpen]);
 
   const api = useMemo<PresentationApi>(
     () => ({
@@ -170,30 +150,25 @@ export function Presentation() {
       prev,
       menuOpen,
       setMenuOpen,
-      lightbox,
-      openLightbox,
-      closeLightbox,
-      setToneOverride,
     }),
-    [active, total, goTo, goToId, next, prev, menuOpen, lightbox, openLightbox, closeLightbox, setToneOverride],
+    [active, total, goTo, goToId, next, prev, menuOpen],
   );
 
   return (
     <PresentationContext.Provider value={api}>
       <MotionConfig reducedMotion="user">
-        <Chrome override={toneOverrides[slides[active].id]} />
+        <Chrome />
         <main>
           {slides.map((def, index) => {
             const Content = slideComponents[def.id];
             return (
-              <Slide key={def.id} def={def} index={index} isActive={index === active}>
+              <Slide key={def.id} def={def} index={index}>
                 {Content ? <Content /> : null}
               </Slide>
             );
           })}
         </main>
         <ChapterMenu />
-        <Lightbox />
         <div aria-hidden className="paper-grain" />
       </MotionConfig>
     </PresentationContext.Provider>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Italiana, Jost, Montserrat, Open_Sans } from "next/font/google";
+import { Italiana, Jost, Open_Sans } from "next/font/google";
 import { meta, neutral } from "@/data/brandPresentation";
 import "./globals.css";
 
@@ -10,8 +10,8 @@ const openSans = Open_Sans({
   weight: ["300", "400", "500", "600"],
 });
 
-// Referências web aproximadas da tipografia do conceito Essência
-// (usadas apenas na tela de tipografia desse conceito).
+// Referências web aproximadas da tipografia da marca aprovada
+// (Italiana nos títulos editoriais, Jost no texto de apoio).
 const italiana = Italiana({
   variable: "--font-italiana",
   subsets: ["latin"],
@@ -22,13 +22,6 @@ const jost = Jost({
   variable: "--font-jost",
   subsets: ["latin"],
   weight: ["300", "400"],
-});
-
-// Tipografia secundária indicada no brandboard Origem (texto do selo).
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["500"],
 });
 
 export const metadata: Metadata = {
@@ -53,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
-      className={`${openSans.variable} ${italiana.variable} ${jost.variable} ${montserrat.variable} antialiased`}
+      className={`${openSans.variable} ${italiana.variable} ${jost.variable} antialiased`}
     >
       <body>{children}</body>
     </html>

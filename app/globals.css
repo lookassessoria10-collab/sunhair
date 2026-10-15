@@ -1,21 +1,18 @@
 @import "tailwindcss";
 
 /*
- * Base neutra da apresentação. As cores de cada conceito chegam por
- * variáveis da tela (--slide-bg, --slide-fg, --slide-accent), definidas em
- * data/brandPresentation.ts, para nenhum conceito contaminar o outro.
+ * Base neutra da apresentação. As cores de cada tela chegam por variáveis
+ * (--slide-bg, --slide-fg, --slide-accent), definidas em data/brandPresentation.ts.
  */
 @theme {
   --color-paper: #f5f0e8;
   --color-ink: #281e1b;
-  --color-night: #2a1717;
   --color-stone: #bdb2a8;
 
   --font-display: var(--font-open-sans), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-open-sans), "Helvetica Neue", Arial, sans-serif;
   --font-essencia: var(--font-italiana), "Didot", serif;
   --font-essencia-support: var(--font-jost), "Futura", sans-serif;
-  --font-origem: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
 
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -48,14 +45,10 @@ body {
 }
 
 /* Telas: cada uma ocupa a viewport no desktop e vira um bloco no mobile. */
-.slide,
-.slide-vars {
+.slide {
   --slide-muted: color-mix(in srgb, var(--slide-fg) 62%, var(--slide-bg));
   --slide-line: color-mix(in srgb, var(--slide-fg) 16%, transparent);
   color: var(--slide-fg);
-}
-
-.slide {
   background: var(--slide-bg);
 }
 

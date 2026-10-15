@@ -1,14 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
-import Image from "next/image";
+import { ArrowDown } from "lucide-react";
 import { usePresentation } from "@/components/presentation/PresentationContext";
 import { Eyebrow, Lines, SafeArea } from "@/components/ui/Layout";
 import { EASE } from "@/components/ui/motion";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { MaskReveal, Reveal, Rule } from "@/components/ui/Reveal";
-import { brand, conceptOrder, concepts, intro } from "@/data/brandPresentation";
+import { brand, intro } from "@/data/brandPresentation";
 
 const enter = (delay: number) => ({
   initial: { opacity: 0, y: 24, filter: "blur(6px)" },
@@ -134,122 +133,6 @@ export function PositioningSlide() {
           </li>
         ))}
       </ol>
-    </SafeArea>
-  );
-}
-
-// TELA 04 — O desafio -------------------------------------------------------
-
-export function ChallengeSlide() {
-  const c = intro.challenge;
-  return (
-    <SafeArea className="justify-between gap-16">
-      <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-[6vw]">
-        <div>
-          <Reveal>
-            <Eyebrow number="00">{c.eyebrow}</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <h2 className="mt-8 font-display text-[clamp(2.1rem,3.4vw,4.2rem)] leading-[1.08]">
-              <Lines lines={c.title} />
-            </h2>
-          </Reveal>
-        </div>
-        <div className="max-w-[42ch] space-y-5 self-end text-[clamp(0.95rem,1vw,1.08rem)] leading-[1.75] text-(--slide-muted)">
-          {c.paragraphs.map((p, i) => (
-            <Reveal key={i} delay={0.3 + i * 0.15}>
-              <p className={i === c.paragraphs.length - 1 ? "text-(--slide-fg)" : ""}>{p}</p>
-            </Reveal>
-          ))}
-          <Reveal delay={0.8}>
-            <p className="eyebrow pt-3">{c.touchpoints.join("  ·  ")}</p>
-          </Reveal>
-        </div>
-      </div>
-
-      <div>
-        <Rule delay={0.6} />
-        <div className="mt-6 grid grid-cols-2 gap-6 lg:mt-[4vh]">
-          {c.figures.map((f, i) => (
-            <Reveal key={f.label} delay={0.9 + i * 0.25}>
-              <p className="flex items-end gap-5">
-                <span className="numeral font-display text-[clamp(4rem,9vw,10.5rem)] leading-[0.82] tracking-[-0.05em]">{f.value}</span>
-                <span className="eyebrow pb-2 lg:pb-3">{f.label}</span>
-              </p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </SafeArea>
-  );
-}
-
-// TELA 05 — Escolha um caminho ---------------------------------------------
-
-export function PathsSlide() {
-  const { goToId } = usePresentation();
-  const c = intro.paths;
-  return (
-    <SafeArea className="gap-10 lg:gap-[5vh]">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <Reveal>
-            <Eyebrow number="00">{c.eyebrow}</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <h2 className="mt-6 font-display text-[clamp(2rem,3vw,3.6rem)] leading-[1.05]">{c.title}</h2>
-          </Reveal>
-        </div>
-        <Reveal delay={0.3}>
-          <p className="eyebrow text-(--slide-muted)">{c.hint}</p>
-        </Reveal>
-      </div>
-
-      <ul className="grid flex-1 gap-10 lg:min-h-0 lg:grid-cols-3 lg:gap-[2.5vw]">
-        {conceptOrder.map((id, i) => {
-          const concept = concepts[id];
-          const { bg, logo } = concept.preview;
-          return (
-            <li key={id} className="lg:min-h-0">
-              <Reveal delay={0.35 + i * 0.15} className="h-full">
-                <button
-                  type="button"
-                  onClick={() => goToId(concept.id)}
-                  className="group flex h-full w-full flex-col text-left"
-                  aria-label={`Ir para o conceito ${concept.number} ${concept.name}`}
-                >
-                  <div
-                    className="relative grid aspect-[4/3] w-full place-items-center overflow-hidden border border-(--slide-line) lg:aspect-auto lg:min-h-0 lg:flex-1"
-                    style={{ backgroundColor: bg }}
-                  >
-                    {/* Prévia desfocada que ganha definição no hover */}
-                    <Image
-                      src={logo.src}
-                      width={logo.width}
-                      height={logo.height}
-                      alt=""
-                      sizes="(min-width: 1024px) 22vw, 70vw"
-                      className="h-auto w-[64%] scale-[1.08] blur-[9px] transition-[filter,scale,opacity] duration-[1200ms] ease-(--ease-editorial) group-hover:scale-100 group-hover:blur-[0px] group-focus-visible:scale-100 group-focus-visible:blur-[0px] pointer-coarse:scale-100 pointer-coarse:blur-[0px]"
-                    />
-                  </div>
-                  <div className="mt-5 flex items-start justify-between gap-4 border-t border-(--slide-line) pt-5">
-                    <div>
-                      <p className="numeral eyebrow text-(--slide-muted)">{concept.number}</p>
-                      <p className="mt-3 text-[clamp(1rem,1.3vw,1.4rem)] font-normal uppercase tracking-[0.32em]">{concept.name}</p>
-                      <p className="mt-2 text-sm font-light text-(--slide-muted)">{concept.summary}</p>
-                    </div>
-                    <ArrowUpRight
-                      className="mt-1 size-5 shrink-0 transition-transform duration-700 ease-(--ease-editorial) group-hover:-translate-y-1 group-hover:translate-x-1"
-                      strokeWidth={1}
-                      aria-hidden
-                    />
-                  </div>
-                </button>
-              </Reveal>
-            </li>
-          );
-        })}
-      </ul>
     </SafeArea>
   );
 }

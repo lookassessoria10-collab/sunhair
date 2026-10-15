@@ -16,13 +16,6 @@ export type Asset = {
   height: number;
 };
 
-/** Parte de uma marca: posição em % dentro da marca completa. */
-export type MarkPart = Asset & {
-  box: { left: number; top: number; width: number; height: number };
-  /** Canto superior esquerdo da parte em pixels do PNG oficial. */
-  origin: { x: number; y: number };
-};
-
 export function asset(key: AssetKey): Asset {
   return crops[key];
 }
@@ -30,10 +23,4 @@ export function asset(key: AssetKey): Asset {
 export function mark(key: MarkKey): Asset {
   const { src, width, height } = marks[key];
   return { src, width, height };
-}
-
-export function markPart(key: MarkKey): MarkPart {
-  const entry = marks[key] as Partial<MarkPart> & Asset;
-  if (!entry.box || !entry.origin) throw new Error(`"${key}" não é uma parte de marca`);
-  return entry as MarkPart;
 }

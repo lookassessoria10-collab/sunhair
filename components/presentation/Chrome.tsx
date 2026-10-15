@@ -3,22 +3,20 @@
 import { ArrowDown, ArrowUp, Menu } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import { brand, chapters, neutral, slides } from "@/data/brandPresentation";
-import { usePresentation, type ToneOverride } from "./PresentationContext";
+import { usePresentation } from "./PresentationContext";
 
 type Corner = "tl" | "tr" | "bl" | "br";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /** Navegação fixa e discreta: marca, capítulos, progresso, contador e setas. */
-export function Chrome({ override }: { override?: ToneOverride }) {
+export function Chrome() {
   const { active, total, goTo, next, prev, setMenuOpen, goToId } = usePresentation();
   const slide = slides[active];
-  const toneOverride = override?.tone;
-  const baseTone = toneOverride ?? slide.theme.tone;
 
   const colorFor = (corner: Corner) => {
-    const tone = toneOverride ?? slide.chrome?.[corner] ?? baseTone;
-    if (!toneOverride && tone === slide.theme.tone) return slide.theme.fg;
+    const tone = slide.chrome?.[corner] ?? slide.theme.tone;
+    if (tone === slide.theme.tone) return slide.theme.fg;
     return tone === "dark" ? neutral.paper : neutral.ink;
   };
 
@@ -28,8 +26,8 @@ export function Chrome({ override }: { override?: ToneOverride }) {
     "--c-tr-lg": colorFor("tr"),
     "--c-bl-lg": colorFor("bl"),
     "--c-br-lg": colorFor("br"),
-    "--c-base": toneOverride ? (toneOverride === "dark" ? neutral.paper : neutral.ink) : slide.theme.fg,
-    "--c-bg": override?.bg ?? slide.theme.bg,
+    "--c-base": slide.theme.fg,
+    "--c-bg": slide.theme.bg,
   } as CSSProperties;
 
   const chapterIndex = chapters.findIndex((c) => c.id === slide.chapter);

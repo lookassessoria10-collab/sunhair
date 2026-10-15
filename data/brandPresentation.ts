@@ -1,23 +1,22 @@
 /**
  * Conteúdo central da apresentação SUN Brazilian Hair.
  *
- * Textos, cores, conceitos, imagens e a ordem das telas vivem aqui.
+ * Textos, cores, imagens e a ordem das telas vivem aqui.
  * Os componentes apenas leem este arquivo: para trocar um título, uma cor
  * ou a ordem das telas, edite somente este arquivo.
  *
- * Marcas: `mark()` / `markPart()` leem data/marks.json, gerado por
+ * Marcas: `mark()` lê data/marks.json, gerado por
  * `npm run build-marks` a partir dos PNGs oficiais em /public/brand/logos.
  * Fotos e grafismos: `asset()` lê data/brandAssets.json (`npm run extract-assets`).
  */
-import { asset, mark, markPart, type Asset } from "./assets";
+import { asset, mark, type Asset } from "./assets";
 
 // ---------------------------------------------------------------------------
 // Tipos
 // ---------------------------------------------------------------------------
 
 export type Tone = "light" | "dark";
-export type ConceptId = "essencia" | "solar" | "origem";
-export type ChapterId = "inicio" | "marca" | "identidade" | "sistema" | "aplicacoes" | "diretrizes" | "introducao" | ConceptId | "comparativo";
+export type ChapterId = "inicio" | "marca" | "identidade" | "sistema" | "aplicacoes" | "diretrizes";
 
 export type Theme = {
   /** Fundo da tela */
@@ -36,12 +35,6 @@ export type Swatch = {
   role: string;
 };
 
-export type GalleryItem = {
-  label: string;
-  caption?: string;
-  image: Asset;
-};
-
 export type ApplicationMockup = {
   eyebrow: string;
   title: string[];
@@ -54,7 +47,7 @@ export type ApplicationMockup = {
 };
 
 // ---------------------------------------------------------------------------
-// Base neutra da apresentação (não pertence a nenhum conceito)
+// Base neutra da apresentação
 // ---------------------------------------------------------------------------
 
 export const neutral = {
@@ -67,15 +60,8 @@ export const neutral = {
 export const themes = {
   paper: { bg: neutral.paper, fg: neutral.ink, accent: neutral.stone, tone: "light" },
   night: { bg: neutral.night, fg: neutral.paper, accent: neutral.stone, tone: "dark" },
-  closing: { bg: "#3D0F18", fg: neutral.paper, accent: neutral.stone, tone: "dark" },
-
   essencia: { bg: "#F8F3EC", fg: "#3E2825", accent: "#D4B483", tone: "light" },
-
-  solarIvory: { bg: "#F8EDE1", fg: "#5A0E1A", accent: "#D4AF7C", tone: "light" },
-  solarBordo: { bg: "#5A0E1A", fg: "#F8EDE1", accent: "#D4AF7C", tone: "dark" },
-
   origemBordo: { bg: "#5A0E1A", fg: "#F8EFE4", accent: "#C9A968", tone: "dark" },
-  origemIvory: { bg: "#F8EFE4", fg: "#5A0E1A", accent: "#C9A968", tone: "light" },
 } satisfies Record<string, Theme>;
 
 // ---------------------------------------------------------------------------
@@ -177,253 +163,7 @@ export const intro = {
     title: ["Brasileiro.", "Sem exceção."],
     words: ["Origem", "Naturalidade", "Movimento", "Qualidade"],
   },
-  challenge: {
-    eyebrow: "O desafio",
-    title: ["Uma marca premium", "sem parecer distante."],
-    paragraphs: [
-      "A SUN precisa comunicar qualidade e desejo sem perder proximidade.",
-      "Precisa funcionar no produto, no salão, no digital e na relação com profissionais.",
-      "Por isso, desenvolvemos três caminhos visuais distintos.",
-    ],
-    touchpoints: ["Produto", "Salão", "Digital", "Profissionais"],
-    figures: [
-      { value: "03", label: "conceitos" },
-      { value: "01", label: "mesma essência" },
-    ],
-  },
-  paths: {
-    eyebrow: "Escolha um caminho",
-    title: "Três caminhos criativos.",
-    hint: "Selecione um conceito ou continue rolando.",
-  },
 };
-
-// ---------------------------------------------------------------------------
-// Conceitos
-// ---------------------------------------------------------------------------
-
-export const concepts = {
-  essencia: {
-    id: "essencia" as const,
-    number: "01",
-    name: "Essência",
-    summary: "Tipográfico, editorial e minimalista.",
-    keywords: ["Tipografia", "Movimento", "Editorial"],
-    logo: {
-      light: mark("essencia/light"),
-      dark: mark("essencia/dark"),
-    },
-    /** Prévia na tela "Escolha um caminho" */
-    preview: { bg: "#F8F3EC", logo: mark("essencia/light") },
-    opening: {
-      title: "Essência",
-      subtitle: ["Quando o movimento do cabelo", "se transforma em identidade."],
-    },
-    defense: {
-      title: ["Menos elementos.", "Mais personalidade."],
-      paragraphs: [
-        "Neste caminho, a força da SUN nasce da própria tipografia.",
-        "Linhas delicadas inspiradas no movimento dos fios complementam a composição sem transformar cabelo ou sol em símbolos literais.",
-        "O resultado é uma identidade editorial, feminina e contemporânea.",
-      ],
-      /** Detalhes ampliados da marca: ponto de foco (%) e zoom */
-      details: [
-        { label: "O gesto do fio", position: "0% 52%", zoom: 2.2 },
-        { label: "O arco de luz", position: "100% 0%", zoom: 2 },
-      ],
-    },
-    construction: {
-      eyebrow: "Construção",
-      parts: [
-        markPart("essencia/light-sun"),
-        markPart("essencia/light-name"),
-        markPart("essencia/light-tagline"),
-      ],
-      callouts: [
-        { title: "Tipografia", text: "Traços finos e proporções alongadas." },
-        { title: "Movimento", text: "Curvas discretas remetem ao comportamento natural dos fios." },
-        { title: "Respiro", text: "Espaços amplos reforçam a percepção premium." },
-      ],
-    },
-    palette: {
-      eyebrow: "Cores",
-      title: "Uma paleta de pele, luz e papel.",
-      hint: "Passe o cursor sobre as cores.",
-      swatches: [
-        { name: "Marfim", hex: "#F8F3EC", role: "Base editorial." },
-        { name: "Areia", hex: "#D9C6B4", role: "Apoio e materiais." },
-        { name: "Argila", hex: "#B89B86", role: "Transição e fotografia." },
-        { name: "Bordô", hex: "#6B2E2E", role: "Contraste em impressos." },
-        { name: "Espresso", hex: "#3E2825", role: "Cor institucional da assinatura." },
-        { name: "Ouro suave", hex: "#D4B483", role: "Uso pontual." },
-      ] satisfies Swatch[],
-      /** Proporção de uso de cada cor (largura das faixas) */
-      weights: [30, 18, 14, 12, 18, 8],
-    },
-    typography: {
-      eyebrow: "Tipografia",
-      primary: {
-        label: "Tipografia principal",
-        traits: ["Elegante", "Moderna", "Feminina"],
-      },
-      secondary: {
-        label: "Tipografia de apoio",
-        traits: ["Clean", "Leve", "Atemporal"],
-      },
-      samples: {
-        brand: "SUN Brazilian Hair",
-        tagline: ["Cabelo brasileiro.", "Sem exceção."],
-        support: "Naturalidade em cada detalhe.",
-      },
-    },
-    language: {
-      eyebrow: "Linguagem gráfica",
-      title: ["O fio não aparece como ilustração.", "Ele aparece como movimento."],
-      line: asset("essencia/lines"),
-      photo: asset("essencia/photo-01"),
-      /** Composição: marca negativa + linha sobre o bordô da paleta */
-      composition: { bg: "#6B2E2E", logo: mark("essencia/dark") },
-      labels: ["Linha isolada", "Linha sobre fotografia", "Linha aplicada em composição"],
-    },
-  },
-
-  solar: {
-    id: "solar" as const,
-    number: "02",
-    name: "Solar",
-    summary: "A luz do nome como assinatura.",
-    keywords: ["Luz", "Contraste", "Presença"],
-    logo: {
-      light: mark("solar/light"),
-      dark: mark("solar/dark"),
-    },
-    preview: { bg: "#5A0E1A", logo: mark("solar/dark") },
-    opening: {
-      title: "Solar",
-      subtitle: ["A luz como assinatura."],
-    },
-    defense: {
-      title: ["O nome ganha símbolo."],
-      paragraphs: [
-        "Neste conceito, SUN assume visualmente a ideia que já carrega no nome.",
-        "O sol aparece de maneira reduzida e delicada, sem recorrer à representação literal ou caricata.",
-        "O dourado funciona como ponto de luz sobre a profundidade do bordô.",
-      ],
-      photo: asset("solar/photo-01"),
-      photoAlt: "Perfil feminino com fios de cabelo atravessados pela luz",
-    },
-    symbol: {
-      eyebrow: "O símbolo",
-      symbol: markPart("solar/light-symbol"),
-      body: markPart("solar/light-body"),
-      ideas: [
-        { title: "Luz", text: "presença" },
-        { title: "Calor", text: "proximidade" },
-        { title: "Movimento", text: "beleza" },
-      ],
-    },
-    contrast: {
-      title: "Contraste como parte da identidade.",
-      swatches: [
-        { name: "Bordô", hex: "#5A0E1A", role: "Cor institucional." },
-        { name: "Vinho", hex: "#7A1F2B", role: "Profundidade e variações." },
-        { name: "Dourado", hex: "#D4AF7C", role: "Ponto de luz. Uso pontual." },
-        { name: "Ivory", hex: "#F8EDE1", role: "Base e respiro." },
-        { name: "Nude", hex: "#D9B7A1", role: "Apoio e materiais." },
-        { name: "Espresso", hex: "#2E1B16", role: "Texto e contraste." },
-      ] satisfies Swatch[],
-    },
-    system: {
-      eyebrow: "Sistema visual",
-      title: ["Raios e arcos", "como sistema."],
-      note: "Tudo continua delicado: o sol nunca explode, apenas pontua.",
-      items: [
-        { title: "Divisores", text: "Raios curtos marcam pausas entre conteúdos." },
-        { title: "Molduras", text: "O arco do sol enquadra fotografia e texto." },
-        { title: "Detalhes", text: "O símbolo reduzido acompanha assinaturas e selos." },
-        { title: "Pequenos grafismos", text: "Fragmentos de raios em papelaria e embalagem." },
-      ],
-      photo: asset("solar/photo-02"),
-      flow: asset("solar/lines"),
-      symbol: mark("solar/light-symbol"),
-    },
-  },
-
-  origem: {
-    id: "origem" as const,
-    number: "03",
-    name: "Origem",
-    summary: "Sol e cabelo em um único símbolo.",
-    keywords: ["Símbolo", "Reconhecimento", "Exclusividade"],
-    logo: {
-      light: mark("origem/light"),
-      dark: mark("origem/dark"),
-    },
-    preview: { bg: "#7A1F2B", logo: mark("origem/dark") },
-    opening: {
-      title: "Origem",
-      subtitle: ["Sol e cabelo em um mesmo gesto."],
-      symbol: markPart("origem/dark-symbol"),
-      body: markPart("origem/dark-body"),
-    },
-    defense: {
-      title: ["Um símbolo que nasce", "do próprio nome."],
-      paragraphs: [
-        "O terceiro caminho cria uma assinatura própria para a SUN.",
-        "O círculo remete ao sol.",
-        "As curvas internas remetem ao movimento natural dos fios.",
-        "Os dois elementos deixam de existir separadamente e formam um único símbolo.",
-        "A proposta cria maior capacidade de reconhecimento mesmo quando o nome SUN não aparece.",
-      ],
-      photo: asset("origem/photo-hero"),
-      photoAlt: "Close de cabelo castanho longo e ondulado em luz quente",
-    },
-    construction: {
-      eyebrow: "Construção do símbolo",
-      symbol: markPart("origem/dark-symbol"),
-      steps: [
-        { title: "O arco", text: "o sol" },
-        { title: "As linhas", text: "os fios" },
-        { title: "O símbolo", text: "um único gesto" },
-      ],
-      replay: "Repetir",
-    },
-    marks: {
-      eyebrow: "Símbolo + wordmark",
-      dark: [
-        { label: "Símbolo isolado", image: mark("origem/dark-symbol") },
-        { label: "SUN", image: mark("origem/dark-wordmark") },
-        { label: "SUN Brazilian Hair", image: mark("origem/dark-name") },
-      ],
-      light: {
-        symbol: mark("origem/light-symbol"),
-        name: mark("origem/light-name"),
-        full: mark("origem/light"),
-        labels: { horizontal: "Versão horizontal", vertical: "Versão vertical", seal: "Selo" },
-        seal: { top: "SUN Brazilian Hair", bottom: "Cabelo brasileiro. Sem exceção" },
-      },
-    },
-    system: {
-      eyebrow: "Paleta e sistema",
-      title: ["O círculo como", "janela da marca."],
-      hint: "Navegue pelas cores.",
-      swatches: [
-        { name: "Bordô", hex: "#5A0E1A", role: "Cor institucional." },
-        { name: "Vinho", hex: "#7A1F2B", role: "Profundidade e embalagens." },
-        { name: "Dourado", hex: "#C9A968", role: "Símbolo e detalhes." },
-        { name: "Ivory", hex: "#F8EFE4", role: "Base e papelaria." },
-        { name: "Nude", hex: "#D9B7A1", role: "Apoio e materiais." },
-      ] satisfies Swatch[],
-      symbolDark: mark("origem/dark-symbol"),
-      symbolLight: mark("origem/light-symbol"),
-      words: ["Luz", "Beleza", "Movimento", "Natural", "Brasilidade"],
-      sizes: [96, 64, 40, 24, 16],
-      scaleNote: "O símbolo mantém a leitura de 96 px a 16 px.",
-    },
-  },
-};
-
-export const conceptOrder: ConceptId[] = ["essencia", "solar", "origem"];
 
 // ---------------------------------------------------------------------------
 // Manual da marca aprovada
@@ -433,15 +173,11 @@ export const manual = {
   logo: {
     primary: mark("essencia/light"),
     negative: mark("essencia/dark"),
-    sun: markPart("essencia/light-sun"),
-    name: markPart("essencia/light-name"),
-    tagline: markPart("essencia/light-tagline"),
   },
   imagery: {
     hero: asset("essencia/photo-hero"),
     detail: asset("essencia/photo-01"),
     editorial: asset("images/editorial-01"),
-    lines: asset("essencia/lines"),
   },
   approved: {
     eyebrow: "Marca aprovada",
@@ -619,26 +355,3 @@ export const manual = {
   },
 };
 
-// ---------------------------------------------------------------------------
-// Capítulo 04 — Comparativo e encerramento
-// ---------------------------------------------------------------------------
-
-export const comparison = {
-  paths: {
-    eyebrow: "Comparativo",
-    title: "Três formas de traduzir SUN.",
-  },
-  marks: {
-    eyebrow: "As três marcas",
-    toggle: { light: "Fundo claro", dark: "Fundo bordô" },
-    darkBackground: "#5A0E1A",
-    lightBackground: neutral.paper,
-    footnote:
-      "Versões para fundo claro e fundo bordô derivadas das marcas oficiais, apenas com troca de cor dentro de cada paleta.",
-  },
-};
-
-export const closing = {
-  tagline: ["Cabelo brasileiro.", "Sem exceção."],
-  signature: ["Três caminhos.", "Uma mesma origem."],
-};

@@ -3,9 +3,9 @@
 import { createContext, useContext, type CSSProperties, type ReactNode } from "react";
 import type { SlideDef } from "@/data/brandPresentation";
 
-type SlideInfo = { id: string; index: number; isActive: boolean };
+type SlideInfo = { id: string };
 
-const SlideContext = createContext<SlideInfo>({ id: "", index: 0, isActive: false });
+const SlideContext = createContext<SlideInfo>({ id: "" });
 
 export function useSlide() {
   return useContext(SlideContext);
@@ -14,7 +14,6 @@ export function useSlide() {
 type Props = {
   def: SlideDef;
   index: number;
-  isActive: boolean;
   children: ReactNode;
 };
 
@@ -22,7 +21,7 @@ type Props = {
  * Moldura de cada tela: 100svh no desktop (composição 16:9),
  * bloco vertical de altura livre no mobile.
  */
-export function Slide({ def, index, isActive, children }: Props) {
+export function Slide({ def, index, children }: Props) {
   const style = {
     "--slide-bg": def.theme.bg,
     "--slide-fg": def.theme.fg,
@@ -37,7 +36,7 @@ export function Slide({ def, index, isActive, children }: Props) {
       className="slide relative min-h-svh overflow-x-clip lg:h-svh lg:min-h-0 lg:overflow-hidden"
       style={style}
     >
-      <SlideContext.Provider value={{ id: def.id, index, isActive }}>{children}</SlideContext.Provider>
+      <SlideContext.Provider value={{ id: def.id }}>{children}</SlideContext.Provider>
     </section>
   );
 }

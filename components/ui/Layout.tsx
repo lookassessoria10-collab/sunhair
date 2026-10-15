@@ -4,19 +4,9 @@ import type { ReactNode } from "react";
  * Área útil de cada tela: respeita a navegação fixa no topo e na base.
  * Desktop: altura exata da viewport. Mobile: bloco vertical de altura livre.
  */
-export function SafeArea({
-  children,
-  className = "",
-  wide = false,
-}: {
-  children: ReactNode;
-  className?: string;
-  /** Margens mínimas, para mosaicos de imagens que ocupam quase toda a tela. */
-  wide?: boolean;
-}) {
-  const spacing = wide ? "lg:px-10 lg:pb-[12vh] lg:pt-[12vh]" : "lg:px-[6vw] lg:pb-[13vh] lg:pt-[15vh]";
+export function SafeArea({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`relative flex min-h-svh flex-col px-5 pb-24 pt-24 sm:px-8 lg:h-full lg:min-h-0 ${spacing} ${className}`}>
+    <div className={`relative flex min-h-svh flex-col px-5 pb-24 pt-24 sm:px-8 lg:h-full lg:min-h-0 lg:px-[6vw] lg:pb-[13vh] lg:pt-[15vh] ${className}`}>
       {children}
     </div>
   );
