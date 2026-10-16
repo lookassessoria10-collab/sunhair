@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { brand, chapters, slides } from "@/data/brandPresentation";
+import { DownloadLinks } from "@/components/ui/DownloadLinks";
 import { EASE } from "@/components/ui/motion";
 import { usePresentation } from "./PresentationContext";
 
@@ -97,6 +98,17 @@ export function ChapterMenu() {
               </motion.section>
             ))}
           </nav>
+
+          <motion.section
+            aria-label="Downloads"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.08 * chapters.length + 0.1, ease: EASE }}
+            className="mx-5 border-t border-ink/15 pb-16 pt-5 lg:mx-10"
+          >
+            <p className="eyebrow opacity-50">Downloads</p>
+            <DownloadLinks className="mt-6" />
+          </motion.section>
         </motion.div>
       )}
     </AnimatePresence>

@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BrandImage } from "@/components/ui/BrandImage";
+import { DownloadLinks } from "@/components/ui/DownloadLinks";
+import { InfoTip } from "@/components/ui/InfoTip";
 import { Eyebrow, Lines, SafeArea } from "@/components/ui/Layout";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { MaskReveal, Reveal } from "@/components/ui/Reveal";
@@ -364,13 +366,19 @@ export function ApplicationSlide() {
   const { id } = useSlide();
   const item = manual.applications[id as keyof typeof manual.applications];
   if (!item) return null;
+  const note = manual.applicationNote;
 
   return (
     <div className="flex min-h-svh flex-col justify-center pb-24 pt-24 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[38%_62%] lg:p-0">
-      <div className="flex flex-col justify-center px-5 sm:px-8 lg:h-full lg:min-h-0 lg:px-[6vw] lg:pb-[13vh] lg:pt-[15vh] [&_h2]:text-[clamp(2rem,3.35vw,4.5rem)]">
+      {/* z-10: o aviso do ícone de informação passa por cima da imagem. */}
+      <div className="relative z-10 flex flex-col justify-center px-5 sm:px-8 lg:h-full lg:min-h-0 lg:px-[6vw] lg:pb-[13vh] lg:pt-[15vh] [&_h2]:text-[clamp(2rem,3.35vw,4.5rem)]">
         <Heading eyebrow={item.eyebrow} title={item.title} text={item.text} />
         <Reveal delay={0.4}>
-          <p className="eyebrow mt-6 text-(--slide-muted) sm:mt-8">Simulação de aplicação</p>
+          <InfoTip className="mt-6 sm:mt-8" label={note.label} buttonLabel={note.buttonLabel} note={note.text} />
+          {/* No PDF não existe hover: lá o aviso aparece como texto. */}
+          <p data-pdf-only className="mt-4 hidden max-w-[48ch] text-sm font-light leading-relaxed text-(--slide-muted)">
+            {note.text}
+          </p>
         </Reveal>
       </div>
       <motion.div
@@ -474,6 +482,9 @@ export function ClosingSlide() {
       </Reveal>
       <Reveal delay={0.9}>
         <p className="eyebrow mt-14 text-(--slide-accent)">{manual.closing.label}</p>
+      </Reveal>
+      <Reveal delay={1.1}>
+        <DownloadLinks className="mt-12" />
       </Reveal>
     </SafeArea>
   );

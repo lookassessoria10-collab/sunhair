@@ -43,6 +43,7 @@ Abra <http://localhost:3000>.
 | `npm run typecheck` | Checagem de tipos |
 | `npm run build-marks` | Regera versões e partes das marcas a partir dos PNGs oficiais |
 | `npm run extract-assets` | Regera fotos e grafismos a partir dos brandboards |
+| `npm run build-pdf` | Gera o PDF da apresentação (com o site rodando, veja **Downloads**) |
 
 ---
 
@@ -78,9 +79,11 @@ public/
   brand/crops/          fotos e grafismos extraídos dos brandboards (gerados)
   images/               fotografias editoriais
   simulations/          mockups finais das aplicações
+  downloads/            PDF da apresentação (gerado)
 scripts/
   build-marks.mjs           versões e partes das marcas oficiais
   extract-brand-assets.mjs  fotos e grafismos dos brandboards
+  build-pdf.mjs             PDF da apresentação, uma página por tela
 ```
 
 ---
@@ -157,6 +160,29 @@ gerado a partir dos PNGs originais). Texto, imagem, alt e alinhamento de cada
 tela ficam em `manual.applications` (`data/brandPresentation.ts`). Para trocar
 um mockup, substitua o arquivo e atualize largura e altura ali; não recrie
 mockups em HTML/CSS.
+
+---
+
+## Downloads
+
+O encerramento e o **Índice** têm dois botões: **Baixar apresentação em PDF** e
+**Arquivos da marca** (pasta no Google Drive com vetor, PNG e arquivo aberto).
+Textos e links ficam em `downloads` (`data/brandPresentation.ts`).
+
+O PDF não é gerado na Vercel: ele é um arquivo em `public/downloads/` e precisa
+ser gerado de novo sempre que o conteúdo mudar (textos, imagens, telas):
+
+```bash
+npm run build
+npm run start      # deixe rodando
+npm run build-pdf  # em outro terminal
+```
+
+O script abre o site no Chrome sem interface, no layout de desktop, e salva uma
+página 16:9 (1920 × 1080) por tela, em vetor, com as fotos em JPEG de alta
+qualidade. A navegação fixa não entra no PDF; o aviso das simulações entra como
+texto. Precisa do Google Chrome (ou Edge) e do Node 22+. Para usar outro
+endereço: `BASE_URL=https://sunhair.vercel.app npm run build-pdf`.
 
 ---
 

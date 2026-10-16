@@ -75,6 +75,21 @@ export const brand = {
   presentationLabel: "Manual de Identidade Visual",
 };
 
+/** Downloads oferecidos no encerramento e no Índice. */
+export const downloads = {
+  pdf: {
+    label: "Baixar apresentação em PDF",
+    /** Gerado por `npm run build-pdf` (scripts/build-pdf.mjs). */
+    href: "/downloads/sun-brazilian-hair-manual-de-identidade-visual.pdf",
+    fileName: "SUN Brazilian Hair - Manual de Identidade Visual.pdf",
+  },
+  brandFiles: {
+    label: "Arquivos da marca",
+    hint: "Vetor, PNG e arquivo aberto, no Google Drive.",
+    href: "https://drive.google.com/drive/folders/1RAkxcYz1pIfCRgIPCrFGgYAsRIfvYi6o?usp=sharing",
+  },
+};
+
 export const meta = {
   title: "SUN Brazilian Hair | Manual de Identidade Visual",
   description: "Manual de identidade visual da SUN Brazilian Hair, com marca aprovada, sistema visual, aplicações e diretrizes de uso.",
@@ -257,6 +272,12 @@ export const manual = {
       "Origem que se vê nos fios.",
       "Comprimento, volume e naturalidade em equilíbrio.",
     ],
+  },
+  /** Aviso das telas de aplicação (ícone de informação e versão em PDF). */
+  applicationNote: {
+    label: "Simulação de aplicação",
+    buttonLabel: "Sobre esta simulação",
+    text: "Imagem ilustrativa, criada para simular a aplicação da marca. No material produzido, o papel, o acabamento, a impressão, a tela e a iluminação alteram cores, brilho e textura. Serve para dar uma noção de como a marca fica aplicada, não como prova de cor.",
   },
   /**
    * Aplicações: mockups finais aprovados (imagens em /public/simulations).
