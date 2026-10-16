@@ -1,8 +1,8 @@
 "use client";
 
-import { ArrowDown, ArrowUp, Menu } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpRight, Menu } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
-import { brand, chapters, neutral, slides } from "@/data/brandPresentation";
+import { brand, chapters, downloads, neutral, slides } from "@/data/brandPresentation";
 import { usePresentation } from "./PresentationContext";
 
 type Corner = "tl" | "tr" | "bl" | "br";
@@ -68,7 +68,7 @@ export function Chrome() {
                     type="button"
                     onClick={() => firstSlide && goToId(firstSlide.id)}
                     aria-current={isCurrent ? "true" : undefined}
-                    className={`eyebrow group relative flex gap-2 py-2 transition-opacity duration-500 ${
+                    className={`eyebrow group relative flex gap-2 whitespace-nowrap py-2 transition-opacity duration-500 ${
                       isCurrent ? "opacity-100" : "opacity-45 hover:opacity-80"
                     }`}
                   >
@@ -84,6 +84,18 @@ export function Chrome() {
               );
             })}
           </ol>
+          {/* Texto só quando cabe: some no celular e entre 1280 e 1440 px, onde os capítulos dividem a barra. */}
+          <a
+            href={downloads.brandFiles.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${downloads.brandFiles.label} (abre o Google Drive em uma nova aba)`}
+            title={downloads.brandFiles.label}
+            className="eyebrow flex items-center gap-2 whitespace-nowrap py-2"
+          >
+            <ArrowUpRight className="size-4" strokeWidth={1.25} aria-hidden />
+            <span className="hidden sm:inline xl:max-[1440px]:hidden">{downloads.brandFiles.label}</span>
+          </a>
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
